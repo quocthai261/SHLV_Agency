@@ -1,0 +1,137 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<CustomerController> HtmlLocalizer
+
+@{
+    var confirmDeleteMessage = String.Format(@HtmlLocalizer["ConfirmDeleteMessage"].Value);
+    var confirmDeleteTitle = String.Format(@HtmlLocalizer["ConfirmDeleteTitle"].Value);
+}
+
+<div class="container-fluid p-0" id="partialViewStep">
+    <h1 class="h5 mb-3 form-title">Thông tin khách hàng 
+        <i class="fa fa-caret-right" aria-hidden="true"></i> 
+        <strong>Xác nhận</strong>
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <ul class="progressbar six-step">
+                <li class="active" onclick="onCustomerProgressBarClicked('CusDetailGeneralPartialView')">Cá nhân</li>
+                <li class="active" onclick="onCustomerProgressBarClicked('CusDetailJobPartialView')">Nghề nghiệp</li>
+                <li class="active" onclick="onCustomerProgressBarClicked('CusDetailContactPartialView')">Liên hệ</li>
+                <li class="active" onclick="onCustomerProgressBarClicked('CusDetailAddressPartialView')">Địa chỉ</li>
+                <li class="active" onclick="onCustomerProgressBarClicked('CusDetailFatcaPartialView')">FATCA</li>
+                <li class="active" onclick="onCustomerProgressBarClicked('CusDetailConfirmPartialView')">Xác nhận</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card card-body form-control-ui">
+                <div class="collapse show" id="collapse01">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                <div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <p class="form-title-question">Quý khách có hồ sơ yêu cầu bảo hiểm, hợp đồng bảo hiểm với Công ty bảo hiểm khác không?</p>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <div class="form-group">
+                                            @(Html.DevExtreme().Switch().SwitchedOffText("Không").SwitchedOnText("Có")
+                                                .Width(80).Value(true))
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                        <div class="form-group">
+                                            @(Html.DevExtreme().TextBox()
+                                                .ElementAttr("class", "required-validation")
+                                                .Label("Tên công ty").LabelMode(EditorLabelMode.Floating)
+                                                .MaxLength(200).Value(null)
+                                                .Value("FPT - Information System"))
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                        <div class="form-group">
+                                            @(Html.DevExtreme().TextBox()
+                                                .ElementAttr("class", "required-validation")
+                                                .Label("Tên sản phẩm bảo hiểm").LabelMode(EditorLabelMode.Floating)
+                                                .MaxLength(200).Value(null)
+                                                .Value("Shinhan - Vui Sống"))
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                        <div class="form-group">
+                                            @(Html.DevExtreme().TextBox()
+                                                .ElementAttr("class", "required-validation")
+                                                .Label("Người được bảo hiểm").LabelMode(EditorLabelMode.Floating)
+                                                .MaxLength(200).Value(null))
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                                        <div class="form-group">
+                                            @(Html.DevExtreme().NumberBox()
+                                                .ElementAttr("class", "required-validation")
+                                                .Label("Số tiền bảo hiểm").LabelMode(EditorLabelMode.Floating)
+                                                .Min(0).Max(99999999999).Format(Format.FixedPoint)
+                                                .Value(500000000))
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                                        <div class="form-group">
+                                            @(Html.DevExtreme().SelectBox()
+                                                //.DataSource(d => d.WebApi().Area("Functions").Controller("Product").LoadAction("GetProductListApi"))
+                                                //.DisplayExpr("ProductName")
+                                                //.ValueExpr("ProductCode")
+                                                .Placeholder("Chọn").ElementAttr("class", "required-validation")
+                                                .SearchEnabled(true).Label("Tình trạng hợp đồng").LabelMode(EditorLabelMode.Floating)
+                                                .ShowClearButton(true)
+                                                .DisplayExpr("Name")
+                                                .ValueExpr("Code")
+                                                .Value("1")
+                                                .DataSource(new object[] {
+                                            new { Code = "1", Name = "Chờ thẩm định"},
+                                            new { Code = "2", Name = "Cấp chuẩn"},
+                                                }))
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3">
+                                        <div class="form-group">
+                                            @(Html.DevExtreme().SelectBox()
+                                                //.DataSource(d => d.WebApi().Area("Functions").Controller("Product").LoadAction("GetProductListApi"))
+                                                //.DisplayExpr("ProductName")
+                                                //.ValueExpr("ProductCode")
+                                                .Placeholder("Chọn").ElementAttr("class", "required-validation")
+                                                .SearchEnabled(true).Label("Yêu cầu bồi thường").LabelMode(EditorLabelMode.Floating)
+                                                .ShowClearButton(true)
+                                                .DisplayExpr("Name")
+                                                .ValueExpr("Code")
+                                                .Value("1")
+                                                .DataSource(new object[] {
+                                            new { Code = "1", Name = "Có"},
+                                            new { Code = "2", Name = "Không"},
+                                                }))
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(Html.DevExtreme().CheckBox().Value(false).IconSize(18).ElementAttr("aria-label", "Custom size")
+                                    .Text("Tôi/Chúng tôi xin cam kết và xác nhận."))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row button-search-row">
+                    <div class="col-md-12">
+                        <button class="btn btn-purple-style" type="submit" onclick="onCustomerProgressBarClicked('CusDetailFatcaPartialView')"><span class="glyphicon glyphicon-triangle-left"></span> Trở về</button>
+                        <button class="btn btn-purple-style" type="submit" onclick="onSaveToCustomerClicked()">Lưu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

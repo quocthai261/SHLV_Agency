@@ -1,0 +1,400 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<eApplicationController> HtmlLocalizer
+
+<div class="container-fluid p-0" id="partialVerticalViewStep">
+    <h1 class="h5 mb-3 form-title">
+        Hồ sơ yêu cầu bảo hiểm
+        <i class="fa fa-caret-right" aria-hidden="true"></i>
+        <strong>bảo cáo tư vấn tài chính</strong>
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <ul class="progressbar five-step">
+                <li class="active" onclick="onVerticalProgressBarClicked('Customer')">Khách hàng</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('Quotation')">Bảng minh họa</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('eApplication')">Hồ sơ yêu cầu bảo hiểm</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('FinancialConsultingReport')">Báo cáo tư vấn tài chính</li>
+                <li onclick="onVerticalProgressBarClicked('Document')">Chứng từ</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card card-body form-control-ui">
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>A. THÔNG TIN CHUNG</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse01">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Hợp đồng bảo hiểm số").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("APAN000807098")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Bên mua bảo hiểm (BMBH)").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("Vũ Trường Giang")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Người được bảo hiểm (NĐBH)").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("Lê Tuấn Ngọc")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("NĐBH bổ sung 1").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("NĐBH bổ sung 2").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("NĐBH bổ sung 3").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("NĐBH bổ sung 4").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("NĐBH bổ sung 5").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>                      
+                    </div>
+                </div>
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>B. THÔNG TIN TƯ VẤN TÀI CHÍNH</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse01">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Họ và tên").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("Huỳnh Minh Nhân")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Mã số").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("SHL000001")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Chi nhánh - Mã chi nhánh").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("Shinhan HCM")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().NumberBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Tỉ lệ hoa hồng").LabelMode(EditorLabelMode.Floating)
+                                    .Min(0).Max(100).ReadOnly(true)
+                                    .Value(100)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Điện thoại").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("0984637262")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Người giới thiệu").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("Cao Toàn Nhân")
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Chi nhánh/PGD ngân hàng").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true)
+                                    .Value("Shinhan HCM")
+                                    )
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse02" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>C. THÔNG TIN KHÁCH HÀNG</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse02">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <p class="form-title-question"> Vui lòng trả lời các câu hỏi sau:   </p>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <p class="form-title-question"> 1. Anh/chị có trực tiếp liên hệ, trao đổi và tư vấn cho BMBH, NĐBH và (các) NĐBHBS trong Đơn yêu cầu bảo hiểm không?   </p>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(Html.DevExtreme().DataGrid<FinancialReportModel>()
+                                    .ID("gridFinancialConsultingReport")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("eApplication")
+                                    .LoadAction("GetFinancialConsultingList")
+                                    )
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(FinancialReportModel.Type)).Caption("Khách hàng").Width(250);
+                                        columns.Add().DataField(nameof(FinancialReportModel.IsSelected)).Caption("").DataType(GridColumnDataType.Boolean).Alignment(HorizontalAlignment.Center).Width(50);
+                                        columns.Add().DataField(nameof(FinancialReportModel.Reason)).Caption("Chi tiết").Alignment(HorizontalAlignment.Right);
+                                    })
+                                    .ColumnHidingEnabled(false)
+                                    .AllowColumnResizing(true)
+                                    .ColumnAutoWidth(true)
+                                    .ColumnMinWidth(50)
+                                    .ShowRowLines(true)
+                                    .FilterRow(f => f.Visible(false))
+                                    .HeaderFilter(f => f.Visible(false))
+                                    .GroupPanel(p => p.Visible(false))
+                                    .Grouping(g => g.AutoExpandAll(false))
+                                    .RemoteOperations(false))
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <p class="form-title-question"> 2. Qua quá trình trao đổi, anh/chị có nhận thấy hiện tại khách hàng có vẻ ngoài không khỏe mạnh, có những dị tật, cụt chi, khập khiễng, sử dụng tay chân giả hoặc đang dùng nạng v.v. không?    </p>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(Html.DevExtreme().DataGrid<FinancialReportModel>()
+                                    .ID("gridFinancialConsultingReport2")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("eApplication")
+                                    .LoadAction("GetFinancialConsultingList")
+                                    )
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(FinancialReportModel.Type)).Caption("Khách hàng").Width(250);
+                                        columns.Add().DataField(nameof(FinancialReportModel.IsSelected)).Caption("").DataType(GridColumnDataType.Boolean).Alignment(HorizontalAlignment.Center).Width(50);
+                                        columns.Add().DataField(nameof(FinancialReportModel.Reason)).Caption("Chi tiết").Alignment(HorizontalAlignment.Right);
+                                    })
+                                    .ColumnHidingEnabled(false)
+                                    .AllowColumnResizing(true)
+                                    .ColumnAutoWidth(true)
+                                    .ColumnMinWidth(50)
+                                    .ShowRowLines(true)
+                                    .FilterRow(f => f.Visible(false))
+                                    .HeaderFilter(f => f.Visible(false))
+                                    .GroupPanel(p => p.Visible(false))
+                                    .Grouping(g => g.AutoExpandAll(false))
+                                    .RemoteOperations(false))
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <p class="form-title-question"> 3. Anh/chị có biết trong vòng 5 năm qua đến hiện tại, khách hàng đã có điều trị hoặc đang điều trị tại bệnh viện, cơ sở y tế, bác sĩ nào không?    </p>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(Html.DevExtreme().DataGrid<FinancialReportModel>()
+                                    .ID("gridFinancialConsultingReport3")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("eApplication")
+                                    .LoadAction("GetFinancialConsultingList")
+                                    )
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(FinancialReportModel.Type)).Caption("Khách hàng").Width(250);
+                                        columns.Add().DataField(nameof(FinancialReportModel.IsSelected)).Caption("").DataType(GridColumnDataType.Boolean).Alignment(HorizontalAlignment.Center).Width(50);
+                                        columns.Add().DataField(nameof(FinancialReportModel.Reason)).Caption("Chi tiết").Alignment(HorizontalAlignment.Right);
+                                    })
+                                    .ColumnHidingEnabled(false)
+                                    .AllowColumnResizing(true)
+                                    .ColumnAutoWidth(true)
+                                    .ColumnMinWidth(50)
+                                    .ShowRowLines(true)
+                                    .FilterRow(f => f.Visible(false))
+                                    .HeaderFilter(f => f.Visible(false))
+                                    .GroupPanel(p => p.Visible(false))
+                                    .Grouping(g => g.AutoExpandAll(false))
+                                    .RemoteOperations(false))
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <p class="form-title-question"> 4. Anh/chị có biết khách hàng đã từng phạm tội phải thi hành án hoặc đang trong thời gian thi hành án, hoặc đang trong thời gian bị áp dụng các biện pháp ngăn chặn, hạn chế theo quyết định của (các) Cơ quan thẩm quyền không?    </p>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(Html.DevExtreme().DataGrid<FinancialReportModel>()
+                                    .ID("gridFinancialConsultingReport4")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("eApplication")
+                                    .LoadAction("GetFinancialConsultingList")
+                                    )
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(FinancialReportModel.Type)).Caption("Khách hàng").Width(250);
+                                        columns.Add().DataField(nameof(FinancialReportModel.IsSelected)).Caption("").DataType(GridColumnDataType.Boolean).Alignment(HorizontalAlignment.Center).Width(50);
+                                        columns.Add().DataField(nameof(FinancialReportModel.Reason)).Caption("Chi tiết").Alignment(HorizontalAlignment.Right);
+                                    })
+                                    .ColumnHidingEnabled(false)
+                                    .AllowColumnResizing(true)
+                                    .ColumnAutoWidth(true)
+                                    .ColumnMinWidth(50)
+                                    .ShowRowLines(true)
+                                    .FilterRow(f => f.Visible(false))
+                                    .HeaderFilter(f => f.Visible(false))
+                                    .GroupPanel(p => p.Visible(false))
+                                    .Grouping(g => g.AutoExpandAll(false))
+                                    .RemoteOperations(false))
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <p class="form-title-question"> 5. Anh/chị có nhận thấy khách hàng có vấn đề về lối sống, các môn thể thao, thói quen, hoạt động chính trị, quân sự, rủi ro về đạo đức hoặc các yếu tố rủi ro khác ảnh hưởng đến việc chấp nhận bảo hiểm không?   </p>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(Html.DevExtreme().DataGrid<FinancialReportModel>()
+                                    .ID("gridFinancialConsultingReport5")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("eApplication")
+                                    .LoadAction("GetFinancialConsultingList")
+                                    )
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(FinancialReportModel.Type)).Caption("Khách hàng").Width(250);
+                                        columns.Add().DataField(nameof(FinancialReportModel.IsSelected)).Caption("").DataType(GridColumnDataType.Boolean).Alignment(HorizontalAlignment.Center).Width(50);
+                                        columns.Add().DataField(nameof(FinancialReportModel.Reason)).Caption("Chi tiết").Alignment(HorizontalAlignment.Right);
+                                    })
+                                    .ColumnHidingEnabled(false)
+                                    .AllowColumnResizing(true)
+                                    .ColumnAutoWidth(true)
+                                    .ColumnMinWidth(50)
+                                    .ShowRowLines(true)
+                                    .FilterRow(f => f.Visible(false))
+                                    .HeaderFilter(f => f.Visible(false))
+                                    .GroupPanel(p => p.Visible(false))
+                                    .Grouping(g => g.AutoExpandAll(false))
+                                    .RemoteOperations(false))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse03" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>D. CAM KẾT CỦA TƯ VẤN TÀI CHÍNH</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse03">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                <div>
+                                    <p style="text-align: justify;">
+                                        Tôi xác nhận rằng:
+                                        <br />
+                                        1. Những thông tin trên đây là tất cả những gì tôi biết về BMBH, NĐBH và (các) NĐBHBS qua quá trình gặp gỡ và trao đổi trực tiếp với họ. Tôi không che giấu bất kỳ thông tin nào trong sự hiểu biết của tôi có thể gây ảnh hưởng đến việc thẩm định và chấp nhận bảo hiểm của Shinhan Life Việt Nam.
+                                        <br />
+                                        2. Tôi đã tư vấn, giải thích rõ cho BMBH, NĐBH và (các) NĐBHBS tất cả các nội dung của Bảng minh họa quyền lợi bảo hiểm, Đơn yêu cầu bảo hiểm, đã tư vấn đúng theo Quy tắc và Điều khoản sản phẩm bảo hiểm và các quy định có liên quan của Shinhan Life Việt Nam. Bộ hồ sơ yêu cầu bảo hiểm và tất cả các thông tin trên đó, bao gồm cả phần cam kết của Tôi là hoàn toàn trung thực, đầy đủ và chính xác.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(Html.DevExtreme().CheckBox().Value(true).IconSize(18).ElementAttr("aria-label", "Custom size")
+                                    .Text("Tôi/Chúng tôi xin cam kết và xác nhận."))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row button-search-row">
+                    <div class="col-md-12">
+                        <button class="btn btn-purple-style" type="submit" onclick="onVerticalProgressBarClicked('eApplication')"><span class="glyphicon glyphicon-triangle-left"></span> Trở về</button>
+                        <button class="btn btn-purple-style" type="submit" onclick="onVerticalProgressBarClicked('Document')">Tiếp theo <span class="glyphicon glyphicon-triangle-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

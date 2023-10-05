@@ -1,0 +1,253 @@
+﻿
+@{
+    var siteMap = ViewBag.SiteMap as IEnumerable<TreeMenuItem<SiteMapNode>>;
+}
+
+<style>
+    .progress-vertical {
+        position: relative;
+        padding: 0 1rem 0 3.5rem;
+        list-style: none;
+    }
+
+    .progress__item {
+        position: relative;
+        min-height: 50px;
+        counter-increment: list;
+        cursor: pointer;
+    }
+
+    .progress__item.last-item {
+        min-height: 20px;
+    }
+
+        .progress__item:before {
+            content: "";
+            position: absolute;
+            left: -1.65rem;
+            top: 28px;
+            height: 40%;
+            width: 1px;
+            border-left: 1px solid #725dcf;
+        }
+
+        .progress__item:after {
+            content: counter(list);
+            position: absolute;
+            top: 0;
+            left: -2.5rem;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: transparent;
+            color: #725dcf;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.3rem;
+            text-align: center;
+            border: 1px solid #725dcf;
+        }
+
+    .progress__item--completed:after {
+        content: "\2713";
+        font-weight: 400;
+        background: #725dcf;
+        color: #fff;
+    }
+
+    .progress__item--active:after {
+        background: #725dcf;
+        color: #fff;
+    }
+
+    .progress-vertical li:last-child:before {
+        border: none;
+    }
+
+    .progress__title {
+        text-align: left;
+    }
+</style>
+
+<div class="mobileService">
+    <div class="service-menu">
+        @{
+            if (siteMap != null)
+            {
+                // <ul>
+                //     @foreach (var item in siteMap)
+                //     {
+                //         @await Html.PartialAsync("_MenuItem", item)
+                //     }
+                //     @await Html.PartialAsync("_MenuItemEx")
+                // </ul>
+
+                <ul>
+                    <li>
+                        <a href="/dashboard/general">
+                            <i class="glyphicon glyphicon-home main-color"></i>&nbsp;
+                            Trang chủ
+                        </a>
+                    </li>
+                    <li>
+                        <a class="collapsed" data-toggle="collapse" data-target="#ServiceNavbar_1" aria-expanded="false">
+                            <i class="glyphicon glyphicon-user main-color"></i>&nbsp;
+                           My Page
+                            <i class="fa fa-caret-up main-color"></i>
+                        </a>
+                        <div class="collapse" id="ServiceNavbar_1" aria-expanded="false" style="">
+                            <ul>
+                                <li>
+                                    <a href="/account/personalinfo">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Thông tin cá nhân
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/account/frequentlyusedfunction">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Chức năng thường dùng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/account/scheduler">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Lịch biểu
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="collapsed" data-toggle="collapse" data-target="#ServiceNavbar_2" aria-expanded="false">
+                            <i class="glyphicon glyphicon-signal main-color"></i>&nbsp;
+                            Thông tin kinh doanh
+                            <i class="fa fa-caret-up main-color"></i>
+                        </a>
+                        <div class="collapse" id="ServiceNavbar_2" aria-expanded="false" style="">
+                            <ul>
+                                <li>
+                                    <a class="collapsed" data-toggle="collapse" data-target="#ServiceNavbar_21" aria-expanded="false">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Nhân sự
+                                        <i class="fa fa-caret-up main-color"></i>
+                                    </a>
+                                    <div class="collapse" id="ServiceNavbar_21" aria-expanded="false" style="">
+                                        <ul>
+                                            <li>
+                                                <a href="/businessindicators/agent">
+                                                    <i class="fa fa-circle  main-color" aria-hidden="true"></i>&nbsp;
+                                                    Danh sách TVTC
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-circle  main-color" aria-hidden="true"></i>&nbsp;
+                                                    Ứng viên chưa ra mã số
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="collapsed" data-toggle="collapse" data-target="#ServiceNavbar_22" aria-expanded="false">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Báo cáo kinh doanh
+                                        <i class="fa fa-caret-up main-color"></i>
+                                    </a>
+                                    <div class="collapse" id="ServiceNavbar_22" aria-expanded="false" style="">
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-circle  main-color" aria-hidden="true"></i>&nbsp;
+                                                    Kết quả kinh doanh
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-circle  main-color" aria-hidden="true"></i>&nbsp;
+                                                    Tỉ lệ duy trì hợp đồng
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Các khoản thưởng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Thu nhập
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="collapsed" data-toggle="collapse" data-target="#ServiceNavbar_3" aria-expanded="false">
+                            <i class="glyphicon glyphicon-th-large main-color"></i>&nbsp;
+                            Dịch vụ khách hàng
+                            <i class="fa fa-caret-up main-color"></i>
+                        </a>
+                        <div class="collapse" id="ServiceNavbar_3" aria-expanded="false" style="">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                       Hồ sơ hợp đồng
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Danh sách yêu cầu giải quyết quyền lợi bảo hiểm
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="glyphicon glyphicon-record main-color"></i>&nbsp;
+                                        Hợp đồng cần thu phí
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-star main-color"></i>&nbsp;
+                            Chương trình thi đua
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list-alt main-color"></i>&nbsp;
+                            Tin tức & sự kiện
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-folder-open main-color"></i>&nbsp;
+                            Biểu mẫu & thông báo
+                        </a>
+                    </li>
+                     <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-question-sign main-color"></i>&nbsp;
+                            Câu hỏi thường gặp
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-comment main-color"></i>&nbsp;
+                            Liên hệ
+                        </a>
+                    </li>
+                </ul>
+            }
+        }
+    </div>
+</div> 

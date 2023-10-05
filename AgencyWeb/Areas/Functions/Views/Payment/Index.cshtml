@@ -1,0 +1,216 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<PaymentController> HtmlLocalizer
+
+<div class="container-fluid p-0" id="partialViewStep">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 card-summary-grid-left">
+            <h1 class="h5 mb-3 form-title"><strong>Thanh toán</strong></h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card card-body form-control-ui">
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>Danh sách chờ thanh toán</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse01">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="form-group">
+                                @(
+                                    Html.DevExtreme().DataGrid()
+                                    .ID("gridPayment")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("Payment")
+                                    .LoadAction("GetOrderPaymentByCustomerList")
+                                    .Key("OrderID")
+                                    )
+                                    .ShowBorders(true)
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(OrderPaymentByCustomerModel.OrderID)).Visible(false);
+                                        columns.Add().DataField(nameof(OrderPaymentByCustomerModel.OrderNo)).Caption("Đơn yêu cầu bảo hiểm số");
+                                        columns.Add().DataField(nameof(OrderPaymentByCustomerModel.FullName)).Caption("Bên mua bảo hiểm");
+                                        columns.Add().DataField(nameof(OrderPaymentByCustomerModel.ProductName)).Caption("Sản phẩm");
+                                        columns.Add().DataField(nameof(OrderPaymentByCustomerModel.Currency)).Caption("Tiền tệ").Width(100);
+                                        columns.Add().DataField(nameof(OrderPaymentByCustomerModel.CreatedDay)).Caption("Ngày tạo").DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy  HH:mm").Alignment(HorizontalAlignment.Center).Width(150);
+                                        columns.Add().DataField(nameof(OrderPaymentByCustomerModel.UpdatedDay)).Caption("Nơi cập nhật").DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy  HH:mm").Alignment(HorizontalAlignment.Center).Width(150);
+                                    })
+                                    .Selection(s => s.Mode(SelectionMode.Multiple))
+                                    .OnSelectionChanged("OnSelectionChangedGridPayment")
+                                    .ColumnHidingEnabled(true)
+                                    .AllowColumnResizing(true)
+                                    .ColumnAutoWidth(true)
+                                    .ColumnMinWidth(50)
+                                    .ShowRowLines(true)
+                                    .FilterRow(f => f.Visible(true))
+                                    .HeaderFilter(f => f.Visible(false))
+                                    .GroupPanel(p => p.Visible(false))
+                                    .Grouping(g => g.AutoExpandAll(false))
+                                    .RemoteOperations(false)
+                                    .Paging(p => p.PageSize(5))
+                                    .Pager(pager =>
+                                    {
+                                        pager.Visible(true);
+                                        pager.DisplayMode(GridPagerDisplayMode.Full);
+                                        pager.ShowPageSizeSelector(true);
+                                        pager.AllowedPageSizes(new JS("[5, 10, 'all']"));
+                                        pager.ShowInfo(true);
+                                        pager.ShowNavigationButtons(true);
+                                    })
+                                    )
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().SelectBox()
+                                    .ID("paymentMethods")
+                                    //.DataSource(d => d.WebApi().Area("Management").Controller("Dashboard").LoadAction("GetPaymentMethodList"))
+                                    .Placeholder("Chọn")
+                                    .SearchEnabled(true).Label("Phương thức thanh toán").LabelMode(EditorLabelMode.Floating)
+                                    .DisplayExpr("Name")
+                                    .ValueExpr("Code").ElementAttr("class", "required-validation")
+                                    .Value("1")
+                                    .DataSource(new object[] {
+                                        new { Code = "1", Name = "Chuyển khoản"},
+                                        new { Code = "2", Name = "Tạo đường dẫn thanh toán"},
+                                        new { Code = "3", Name = "Cổng thanh toán trực tuyến"},
+                                    })
+                                    .ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Label("Số tiền thanh toán").LabelMode(EditorLabelMode.Floating)
+                                    .Value("19.180.000")
+                                    .Disabled(true)
+                                    )
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                            <div class="row">
+                                <div class="form-group">
+                                    <button class="btn btn-purple-style" type="submit">Tạo hóa đơn</button>
+                                    <button class="btn btn-purple-style" type="submit">Xóa thông tin</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse02" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>Thông tin thanh toán</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse02">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .ElementAttr("class", "required-validation")
+                                    .Value("TS4659324575724519418794628775")
+                                    .Label("Hóa đơn số").LabelMode(EditorLabelMode.Floating)
+                                    .Disabled(true)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                @(Html.DevExtreme().SelectBox()
+                                    .ID("payerName")
+                                    //.DataSource(d => d.WebApi().Area("Management").Controller("Dashboard").LoadAction("GetOrderPaymentByCustomerList"))
+                                    .Placeholder("Chọn")
+                                    .SearchEnabled(true).Label("Người thanh toán").LabelMode(EditorLabelMode.Floating)
+                                    .DisplayExpr("Name")
+                                    .ValueExpr("Code").ElementAttr("class", "required-validation")
+                                    .Value("1")
+                                    .DataSource(new object[] {
+                                new { Code = "1", Name = "Lê Minh Nhẫn"},
+                                new { Code = "2", Name = "Cao Hoàng Long"},
+                                    })
+                                    .ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox().Label("Ghi chú")
+                                    .LabelMode(EditorLabelMode.Floating)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                @(Html.DevExtreme().DateBox()
+                                    .Value(DateTime.Now).DisplayFormat("dd/MM/yyyy")
+                                    .ElementAttr("class", "")
+                                    .Disabled(true)
+                                    .Label("Ngày thanh toán")
+                                    .LabelMode(EditorLabelMode.Floating)
+                                    )
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                            <div class="form-group">
+                                @(Html.DevExtreme().NumberBox()
+                                    .Value(19180000)
+                                    .ElementAttr("class", "required-validation")
+                                    .Disabled(true)
+                                    .Label("Số tiền thanh toán").Format(Format.FixedPoint)
+                                    .LabelMode(EditorLabelMode.Floating)
+                                    )
+                            </div>
+                        </div>
+                        <div class="mt-2 col-12 col-sm-12 col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <button class="btn btn-purple-style btn-lg" type="submit">Thanh toán</button>
+                                <button class="btn btn-purple-style btn-lg" type="submit" onclick="onButtonPaymentCancelClicked()">Hủy bỏ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        setActiveStepBarVertical('Payment');
+    });
+
+    function OnSelectionChangedGridPayment(e) {
+        const dataGridInstance = $("#gridPayment").dxDataGrid("instance");
+
+        if (e.selectedRowsData.length > 1) {
+            var selected = e.selectedRowsData[e.selectedRowsData.length - 1];
+            console.log("aaa", e.selectedRowsData[e.selectedRowsData.length - 1])
+
+            dataGridInstance.deselectAll();
+            console.log("selected", selected)
+
+            dataGridInstance.selectRows([selected.OrderID], true);
+        }
+    }
+    
+    function onBackToeAppListClicked() {
+        onConfirmBackToeAppList('@Url.Action("Index", "eApplication", new { area = "Management" })', 'Bạn có muốn trở về danh sách hồ sơ yêu cầu bảo hiểm?', '', 'Có', 'Không');
+    }
+
+    function onButtonPaymentCancelClicked() {
+        location.href = '@Url.Action("Index", "eApplication", new { area = "Management" })';
+    }
+</script>

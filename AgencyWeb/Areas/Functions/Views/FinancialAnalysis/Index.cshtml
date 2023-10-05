@@ -1,0 +1,141 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<FinancialAnalysisController> HtmlLocalizer
+
+@{
+    var confirmDeleteMessage = String.Format(@HtmlLocalizer["ConfirmDeleteMessage"].Value);
+    var confirmDeleteTitle = String.Format(@HtmlLocalizer["ConfirmDeleteTitle"].Value);
+}
+
+<div class="container-fluid p-0">
+
+    <h1 class="h4 mb-3 form-title"><strong>Danh sách bảng phân tích nhu cầu tài chính</strong></h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card flex-fill w-100 form-control-ui">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Tìm kiếm</h5>
+                    <button class="btn btn-purple-invert btn-filter" type="submit" onclick="onAddNewFinancialAnalysisClicked()"><span class="glyphicon glyphicon-plus"></span> Thêm mới</button>
+                </div>
+                <div class="card-body py-3">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .Label("Mã bảng phân tích nhu cầu tài chính").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true))
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .Label("Tên khách hàng").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(100).ShowClearButton(true))
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().DateBox()
+                                    .Type(DateBoxType.Date)
+                                    .DisplayFormat("dd/MM/yyyy")
+                                    .UseMaskBehavior(true)
+                                    .Placeholder("dd/mm/yyyy")
+                                    .Label("Ngày tạo").LabelMode(EditorLabelMode.Floating).ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row button-search-row">
+                        <div class="col-md-12">
+                            <button class="btn btn-purple-style" type="submit">@HtmlLocalizer["Delete"]</button>
+                            <button class="btn btn-purple-style" type="submit">@HtmlLocalizer["Search"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card flex-fill w-100 form-control-ui">
+                <div class="card-body py-3">
+                    @(Html.DevExtreme().DataGrid()
+                            .ID("gridFinancialAnalysisList")
+                            .DataSource(d => d.WebApi()
+                            .Area("Functions")
+                            .Controller("FinancialAnalysis")
+                            .LoadAction("GetFinancialAnalysisList")
+                            )
+                            .ShowBorders(true)
+                            .Selection(s => s.Mode(SelectionMode.Single))
+                            .Export(e => e.Enabled(true).AllowExportSelectedData(false)).OnExporting("exportingGridFinancialAnalysis")
+                            .Editing(editing =>
+                            {
+                                editing.Texts(textBuilder =>
+                            {
+                                textBuilder.ConfirmDeleteMessage(confirmDeleteMessage);
+                                textBuilder.ConfirmDeleteTitle(confirmDeleteTitle);
+                            });
+                            })
+                            .Columns(columns =>
+                            {
+                                columns.Add().Caption("").Width(90)
+                            .CellTemplate(@<text>
+                                <span class="glyphicon glyphicon-eye-open icon-grid"></span>  <span class="glyphicon glyphicon-edit icon-grid"></span>  <span class="glyphicon glyphicon-trash icon-grid"></span>
+                            </text>);
+                                columns.Add().DataField(nameof(FinancialAnalysisModel.FinancialPlan)).Caption("Mã bảng PTNCTC");
+                                columns.Add().DataField(nameof(FinancialAnalysisModel.Fullname)).Caption("Tên khách hàng");
+                                columns.Add().DataField(nameof(FinancialAnalysisModel.NecessarySmount)).Caption("Số tiền cần thiết ước tính (VND)").DataType(GridColumnDataType.Number).Format(Format.FixedPoint).Alignment(HorizontalAlignment.Right).Width(250);
+                                columns.Add().DataField(nameof(FinancialAnalysisModel.CurrentAmount)).Caption("Số tiền bảo hiểm hiện có (VND)").DataType(GridColumnDataType.Number).Format(Format.FixedPoint).Alignment(HorizontalAlignment.Right).Width(250);
+                                columns.Add().DataField(nameof(FinancialAnalysisModel.CurrentFinancialStatus)).Caption("Nhu cầu tài chính hiện tại (VND)").DataType(GridColumnDataType.Number).Format(Format.FixedPoint).Alignment(HorizontalAlignment.Right).Width(250);
+                                columns.Add().DataField(nameof(FinancialAnalysisModel.CreatedDay)).DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy  HH:mm").Alignment(HorizontalAlignment.Center).Caption("Ngày tạo").Width(150);
+                                columns.Add().DataField(nameof(FinancialAnalysisModel.UpdatedDay)).DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy  HH:mm").Alignment(HorizontalAlignment.Center).Caption("Ngày cập nhật").Width(150);
+
+                            })
+                        .ColumnHidingEnabled(true)
+                        .AllowColumnResizing(true)
+                        .ColumnAutoWidth(true)
+                        .ColumnMinWidth(50)
+                        .ShowRowLines(true)
+                        .FilterRow(f => f.Visible(true))
+                        .HeaderFilter(f => f.Visible(false))
+                        .GroupPanel(p => p.Visible(false))
+                        .Grouping(g => g.AutoExpandAll(false))
+                        .RemoteOperations(false)
+                        .Paging(paging => paging.PageSize(5))
+                        .Pager(pager =>
+                        {
+                            pager.ShowPageSizeSelector(true);
+                            pager.AllowedPageSizes(new[] { 5, 10, 20 });
+                            pager.ShowInfo(true);
+                        })
+                        )
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function onAddNewFinancialAnalysisClicked() {
+        location.href = '@Url.Action("FinancialAnalysisDetail", "FinancialAnalysis", new { area = "Functions" })';
+    }
+
+    function exportingGridFinancialAnalysis(e) {
+        var workbook = new ExcelJS.Workbook();
+        var worksheet = workbook.addWorksheet('FinancialAnalysis');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'FinancialAnalysisList.xlsx');
+            });
+        });
+        e.cancel = true;
+    }
+</script>

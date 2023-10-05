@@ -1,0 +1,88 @@
+﻿<div class="container-fluid conya">
+    <div class="side-left">
+        <div class="sid-layy">
+            <div class="row slid-roo">
+                <div class="data-portion">
+                    <h2><strong style="color:white">VỀ SHINHAN LIFE</strong></h2>
+                    <p style="color:white">Công ty Bảo hiểm nhân thọ Shinhan Life là thành viên của Tập đoàn Tài chính Shinhan, Hàn Quốc. Được thành lập từ năm 1990, Shinhan Life Insurance đã phát triển nhanh chóng và trở thành một trong các công ty bảo hiểm nhân thọ dẫn đầu thị trường Hàn Quốc và được xếp hạng tín dụng “AAA” bởi Korea Ratings và Cơ quan Kiểm định Thông tin Dịch vụ Tín dụng Hàn Quốc. Vào tháng 7 năm 2021, Shinhan Life và Orange Life tiến hành sát nhập thành Shinhan Life. Mục tiêu của Shinhan Life là đạt được thành tích xuất sắc và trở thành công ty dẫn đầu ngành bảo hiểm nhân thọ tại Hàn Quốc.</p>
+                    <ul>
+                        <li>Ph :- +91 9756545434</li>
+                        <li>Fax :- (+7867 65 544)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="side-right">
+        <main class="d-flex w-100" style="background-color:#F7F5FC">
+            <div class="container d-flex flex-column login-form">
+                <div class="row">
+                    <div class="d-table-cell align-middle">
+                        <div class="text-center mt-4">
+                            <img src="/images/logo-shlv.png" class="logo" style="width:200px; margin-bottom:30px" />
+                            <h1 class="h4 main-color">Cổng thông tin tư vấn tài chính</h1>
+                            <p class="lead main-color">
+                                Shinhan Life VietNam
+                            </p>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="m-sm-3">
+                                    <form>
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                @(Html.DevExtreme().TextBox()
+                                                    .Label("Email").LabelMode(EditorLabelMode.Floating)
+                                                    .MaxLength(50).ShowClearButton(true))
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                @(Html.DevExtreme().TextBox()
+                                                    .Label("Mật khẩu").LabelMode(EditorLabelMode.Floating).Mode(TextBoxMode.Password)
+                                                    .MaxLength(50).ShowClearButton(true))
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="form-check align-items-center">
+                                                <input id="customControlInline" type="checkbox" class="form-check-input" value="remember-me" name="remember-me" checked>
+                                                <label class="form-check-label text-small" for="customControlInline">Ghi nhớ đăng nhập</label>
+                                                <label class="form-check-label text-small" style="float: right;"><a onclick="onButtonForgotPasswordClicked()">Quên mật khẩu?</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="d-grid gap-2 mt-3">
+                                            <a class="btn btn-lg btn-purple-style" onclick="onButtonLoginClicked()">Đăng nhập</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+@await Html.PartialAsync("PopupOTPLogin")
+@await Html.PartialAsync("PopupForgotPassword")
+@await Html.PartialAsync("PopupOTPForgotPassword")
+@await Html.PartialAsync("PopupChangePassword")
+
+<script>
+    function onButtonLoginClicked() {
+        var modal = document.getElementById("popupOTPLogin");
+        modal.classList.add("show", "in");
+        modal.style.display = "block";
+    }
+</script>
+
+<script>
+    function onButtonForgotPasswordClicked() {
+        var modal = document.getElementById("popupForgotPassword");
+        modal.classList.add("show", "in");
+        modal.style.display = "block";
+    }
+</script>

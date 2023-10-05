@@ -1,0 +1,60 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Account.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+<div class="container-fluid p-0">
+    <h1 class="h4 mb-3 form-title"><strong>Cài đặt chức năng thường dùng</strong></h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card flex-fill w-100 form-control-ui">
+                <div class="card-body py-3">
+                    <div class="row">
+                        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+                            <div class="card flex-fill w-100 form-control-ui">
+                                <div class="card-body py-3">
+                                    @(Html.DevExtreme().DataGrid()
+                                        .ID("gridFrequentlyUsedFunctionList")
+                                        .DataSource(d => d.WebApi()
+                                        .Area("Account")
+                                        .Controller("FrequentlyUsedFunction")
+                                        .LoadAction("GetFrequentlyUsedFunctionList")
+                                        )
+                                        .ShowBorders(true)
+                                        .Selection(s => s.Mode(SelectionMode.Multiple))
+                                        .Columns(columns =>
+                                        {
+                                            columns.Add().DataField(nameof(FrequentlyUsedFunctionModel.FunctionCode)).Caption("Mã chức năng");
+                                            columns.Add().DataField(nameof(FrequentlyUsedFunctionModel.FunctionName)).Caption("Tên chức năng");
+                                        })
+                                        .ColumnHidingEnabled(false)
+                                        .AllowColumnResizing(true)
+                                        .ColumnAutoWidth(true)
+                                        .ColumnMinWidth(50)
+                                        .ShowRowLines(true)
+                                        .FilterRow(f => f.Visible(true))
+                                        .HeaderFilter(f => f.Visible(false))
+                                        .GroupPanel(p => p.Visible(false))
+                                        .Grouping(g => g.AutoExpandAll(false))
+                                        .RemoteOperations(false)
+                                        .Paging(paging => paging.PageSize(10))
+                                        .Pager(pager =>
+                                        {
+                                            pager.ShowPageSizeSelector(true);
+                                            pager.AllowedPageSizes(new[] { 5, 10, 20 });
+                                            pager.ShowInfo(true);
+                                        })
+                                        )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row button-right-row">
+                        <div class="col-md-12">
+                            <button class="btn btn-purple-style" type="submit">Cập nhật thông tin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

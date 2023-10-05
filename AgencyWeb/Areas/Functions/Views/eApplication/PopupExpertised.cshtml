@@ -1,0 +1,90 @@
+﻿@using AgencyWeb.Models
+
+<div class="modal fade" id="popupExpertised" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="background: #00000080;">
+    <div class="modal-dialog modal-xl" style="max-height:90%; margin-top: 100px;">
+        <div class="modal-content" style="max-height: 90%; overflow-y: auto;">
+            <div class="modal-header">
+                <h1 class="h5 mb-3 form-title"><strong>QUICK UNDERWRITING (KẾT QUẢ THẨM ĐỊNH SƠ BỘ)</strong></h1>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <p>
+                            <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <strong>Bên mua bảo hiểm</strong>
+                            </a>
+                        </p>
+                        <div class="collapse show" id="collapse01">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <p class="form-content-normal">
+                                    <i class="fa fa-circle fa-2xs" aria-hidden="true" style="font-size: xx-small;"></i>
+                                    <strong>  Hồ sơ có thể bị tăng phí hoặc từ chối do nghề nghiệp có rủi ro cao.</strong>
+                                    <br />
+                                    (The contract is rated or declined maybe due to occupation class D)
+                                </p>
+                                <p class="form-content-normal">
+                                    <i class="fa fa-circle fa-2xs" aria-hidden="true" style="font-size: xx-small;"></i>
+                                    <strong>  Bổ sung tờ khai W-8BEN dành cho cá nhân có yếu tố Hoa Kỳ. </strong>
+                                    <br />
+                                    (Please complete form W-8BEN)
+                                </p>
+                                <p class="form-content-normal">
+                                    <i class="fa fa-circle fa-2xs" aria-hidden="true" style="font-size: xx-small;"></i>
+                                    <strong>  Bổ sung mẫu thông báo và đồng ý về việc xử lý dữ liệu cá nhân.</strong>
+                                    <br />
+                                    (Please complete consent form)
+                                </p>
+                            </div>
+                        </div>
+                        <p>
+                            <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <strong>Người được bảo hiểm</strong>
+                            </a>
+                        </p>
+                        <div class="collapse show" id="collapse01">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <p class="form-content-normal">
+                                    <i class="fa fa-circle fa-2xs" aria-hidden="true" style="font-size: xx-small;"></i>
+                                    <strong>  Hồ sơ có thể bị tăng phí hoặc từ chối do nghề nghiệp có rủi ro cao.</strong>
+                                    <br />
+                                    (The contract is rated or declined maybe due to occupation class D)
+                                </p>
+                                <p class="form-content-normal">
+                                    <i class="fa fa-circle fa-2xs" aria-hidden="true" style="font-size: xx-small;"></i>
+                                    <strong>  Bổ sung tờ khai W-8BEN dành cho cá nhân có yếu tố Hoa Kỳ. </strong>
+                                    <br />
+                                    (Please complete form W-8BEN)
+                                </p>
+                                <p class="form-content-normal">
+                                    <i class="fa fa-circle fa-2xs" aria-hidden="true" style="font-size: xx-small;"></i>
+                                    <strong>  Bổ sung mẫu thông báo và đồng ý về việc xử lý dữ liệu cá nhân.</strong>
+                                    <br />
+                                    (Please complete consent form)
+                                </p>
+                                <p class="form-content-normal">
+                                    <i class="fa fa-circle fa-2xs" aria-hidden="true" style="font-size: xx-small;"></i>
+                                    <strong>  Bổ sung hồ sơ chẩn đoán, điều trị, theo dõi và kết quả xét nghiệm đã thực hiện do câu hỏi sức khỏe trả lời Có.</strong>
+                                    <br />
+                                    (Please provide the medical document relating to diagnosis, treatment, follow up and result of lab tests due to answering Yes in health question)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnCloseExpertised" onclick="onButtonCloseExpertisedClicked()" type="button" class="btn btn-purple-style">Thoát</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function onButtonCloseExpertisedClicked() {
+        var modal = document.getElementById("popupExpertised");
+        modal.classList.remove("show", "in");
+        modal.style.display = "none";
+    }
+
+</script>

@@ -1,0 +1,101 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Account.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+<div class="container-fluid p-0">
+    <h1 class="h4 mb-3 form-title"><strong>Lịch biểu</strong></h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card flex-fill w-100 form-control-ui">
+                <div class="card-body py-3">
+                    <div class="row button-right-row">
+                        <div class="col-md-12">
+                            <button class="btn btn-purple-style" type="submit"><span class="glyphicon glyphicon-plus"></span> Thêm mới</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            @(Html.DevExtreme().Scheduler()
+                                .ID("scheduler")
+                                .DataSource(d => d.WebApi()
+                                .Area("Account")
+                                .Controller("Scheduler")
+                                .LoadAction("GetSchedulerList"))
+                                .TimeZone("Asia/Ho_Chi_Minh")
+                                .Views(views =>
+                                {
+                                    views.Add()
+                                    .Name("Ngày")
+                                    .Type(SchedulerViewType.Day)
+                                    .MaxAppointmentsPerCell(MaxAppointmentsPerCell.Auto);
+                                    views.Add()
+                                    .Name("Agenda")
+                                    .Type(SchedulerViewType.Agenda)
+                                    .MaxAppointmentsPerCell(MaxAppointmentsPerCell.Auto);
+                                    views.Add()
+                                    .Name("Tháng")
+                                    .Type(SchedulerViewType.Month)
+                                    .MaxAppointmentsPerCell(MaxAppointmentsPerCell.Auto);
+                                })
+                                .CurrentView(SchedulerViewType.Month)
+                                .CurrentDate(new DateTime(2021, 4, 29))
+                                .StartDayHour(9)
+                                .Height(600)
+                                .TextExpr("Text")
+                                .StartDateExpr("StartDate")
+                                .EndDateExpr("EndDate")
+                                .AllDayExpr("AllDay")
+                                .DateCellTemplate(new JS("dateCellTemplate"))
+                                .CustomizeDateNavigatorText("customizeDateNavigatorText")
+                                .CrossScrollingEnabled(true)
+                                .Scrolling(config => { config.Mode(SchedulerScrollingMode.Virtual); })
+                                .ShowAllDayPanel(false)
+                                )
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function customizeDateNavigatorText(e) {
+        var scheduler = $("#scheduler").dxScheduler("instance");
+
+        var formatOptions = {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+        };
+        var formattedStartDate = DateToString(e.startDate);
+        var formattedEndDate = DateToString(e.endDate);
+        var view = scheduler.option("currentView");
+        //console.log("customizeDateNavigatorText", view);
+        if (view === "Ngày")
+            return formattedStartDate;
+        if (view === "Tháng" || view === "Agenda")
+            return formattedStartDate + " - " + formattedEndDate;
+        return formattedStartDate + " - " + formattedEndDate;
+    }
+
+    function dateCellTemplate(itemData, itemIndex, itemElement) {
+        var scheduler = $("#scheduler").dxScheduler("instance");
+        var date;
+        var view = scheduler.option("currentView");
+        console.log("dateCellTemplate", view);
+        if (view === "Agenda" || view === "Agenda")
+            date = DateToString(itemData.date);
+        if (view === "month" || view === "Tháng")
+            date = DateToStringDayOfWeek(itemData.date);
+
+        
+        //console.log("date", date);
+        var element = $('<div>' + date + '</div>');
+        //console.log("dateCellTemplate", itemData, itemIndex, itemElement)
+
+        return itemElement.append(element);
+    }
+</script>

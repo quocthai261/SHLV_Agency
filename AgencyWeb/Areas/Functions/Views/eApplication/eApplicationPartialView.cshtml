@@ -1,0 +1,45 @@
+﻿<div class="container-fluid p-0" id="partialVerticalViewStep">
+    <h1 class="h5 mb-3 form-title">
+        Hồ sơ yêu cầu bảo hiểm
+        <i class="fa fa-caret-right" aria-hidden="true"></i>
+        <strong>eApplication</strong>
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <ul class="progressbar five-step">
+                <li class="active" onclick="onVerticalProgressBarClicked('Customer')">Khách hàng</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('Quotation')">Bảng minh họa</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('eApplication')">Hồ sơ yêu cầu bảo hiểm</li>
+                <li onclick="onVerticalProgressBarClicked('FinancialConsultingReport')">Báo cáo tư vấn tài chính</li>
+                <li onclick="onVerticalProgressBarClicked('Document')">Chứng từ</li>
+            </ul>
+        </div>
+    </div>
+    @await Html.PartialAsync("PolicyOwnerPartialView")
+</div>
+
+<script>
+    function onBackToeAppListClicked() {
+        location.href = '@Url.Action("Index", "eApplication", new { area = "Functions" })';
+    }
+
+    function onSaveToeApplicationClicked() {
+        notify("Cập nhật dữ liệu thành công", "success");
+
+        location.href = '@Url.Action("Index", "eApplication", new { area = "Functions" })';
+    }
+
+    function onProgressBarClicked(step) {
+        $.ajax({
+            url: '@Url.Action("StepPartialView", "eApplication", new { area = "Functions" })',
+            type: 'POST',
+            data: {
+                param: step
+            },
+            async: true,
+            success: function (result) {
+                $('#partialViewStep').html(result);
+            },
+        });
+    }
+</script>

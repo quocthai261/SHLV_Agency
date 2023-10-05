@@ -1,0 +1,22 @@
+﻿@{
+    if (ViewBag.Step == "Customer")
+    {
+        @await Html.PartialAsync("CustomerPartialView")
+    }
+    else if (ViewBag.Step == "Quotation")
+    {
+        @await Html.PartialAsync("QuotationPartialView")
+    }
+    else if (ViewBag.Step == "eApplication")
+    {
+        @await Html.PartialAsync("eApplicationPartialView")
+    }
+    else if (ViewBag.Step == "FinancialConsultingReport")
+    {
+        @await Html.PartialAsync("FCReportPartialView")
+    }
+    else if (ViewBag.Step == "Document")
+    {
+        @await Html.PartialAsync("DocumentPartialView")
+    }
+}

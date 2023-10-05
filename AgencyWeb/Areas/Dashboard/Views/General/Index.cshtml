@@ -1,0 +1,329 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Dashboard.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<GeneralController> HtmlLocalizer
+
+<style>
+    .content {
+        padding: 0rem 3rem 1.5rem;
+    }
+</style>
+
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="row row-dashboard">
+                <h1 class="h4 mb-3 form-title"><strong>Số lượng hợp đồng đã nộp</strong></h1>
+                @(Html.DevExtreme().Chart()
+                    .ID("chart")
+                    .Palette(VizPalette.Soft).Size(s => s.Height(300))
+                    .CommonSeriesSettings(s => s
+                        .ArgumentField("State")
+                        .Type(SeriesType.Bar)
+                        .IgnoreEmptyPoints(true).HoverMode(ChartSeriesHoverMode.AllArgumentPoints)
+                        .SelectionMode(ChartSeriesSelectionMode.AllArgumentPoints)
+                        .Label(l => l
+                            .Visible(true)
+                            .Font(f => f.Color("#000000"))
+                            .BackgroundColor("none")
+                            .Format(f => f
+                                .Type(Format.FixedPoint)
+                                .Precision(0)
+                                )
+                            )
+                    )
+                    .Series(s =>
+                    {
+                        s.Add().ValueField("PreviousYear").Name("Năm trước").Color("#BFBFBF");
+                        s.Add().ValueField("CurrentYear").Name("Năm hiện tại").Color("#725dcf");
+                    })
+                    .Legend(l => l
+                    .VerticalAlignment(VerticalEdge.Top)
+                    .HorizontalAlignment(HorizontalAlignment.Center)
+                    )
+                    .DataSource(new object[] {
+                    new { State = "10/2022", PreviousYear = 14.95, CurrentYear = 52.85},
+                    new { State = "11/2022", PreviousYear = 12.94, CurrentYear = 17.66},
+                    new { State = "12/2022", PreviousYear = 28.51, CurrentYear = 19.87},
+                    new { State = "01/2023", PreviousYear = 44.08, CurrentYear = 55.4 },
+                    new { State = "02/2023", PreviousYear = 12.03, CurrentYear = 85.4  },
+                    new { State = "03/2023", PreviousYear = 33.86, CurrentYear = 65.4  },
+                    new { State = "04/2023", PreviousYear = 34.95, CurrentYear = 42.85},
+                    new { State = "05/2023", PreviousYear = 12.94, CurrentYear = 17.66},
+                    new { State = "06/2023", PreviousYear = 48.51, CurrentYear = 19.87},
+                    new { State = "07/2023", PreviousYear = 35.3, CurrentYear = 74.39 },
+                    new { State = "08/2023", PreviousYear = 54.08, CurrentYear = 85.4 },
+                    new { State = "09/2023", PreviousYear = 14.95, CurrentYear = 52.85 },
+                    })
+                    )
+            </div>
+            <div class="row row-dashboard">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <h1 class="h4 mb-3 form-title"><strong>Tỉ lệ bán hàng theo sản phẩm của năm</strong></h1>
+                    @(Html.DevExtreme().PieChart()
+                        .Palette(VizPalette.SoftPastel)
+                        .Type(PieChartType.Doughnut).Size(s => s.Height(300))
+                        //.Title("The Population of Continents and Regions")
+                        .Tooltip(t => t
+                        .Enabled(true)
+                        .Format(Format.FixedPoint)
+                        .CustomizeTooltip(@<text>
+                            function(arg) {
+                            return {
+                            text: arg.value/1000000 + " triệu VND - " + (arg.percent * 100) + "%"
+                            };
+                            }
+                        </text>)
+                        )
+                        .Legend(l => l
+                        .HorizontalAlignment(HorizontalAlignment.Center)
+                        .VerticalAlignment(VerticalEdge.Bottom)
+                        .Margin(0)
+                        )
+                        .Series(s => s.Add().ArgumentField("Product").ValueField("Val")
+                        .Label(l => l.Visible(true).CustomizeText(@<text>
+                            function(arg) {
+                            console.log(arg);
+                            return arg.value/1000000 + " Triệu VND - " + arg.percentText
+                            }
+                        </text>)
+                        .Format(Format.FixedPoint)
+                        .Connector(c => c.Visible(true))
+                        )
+                        )
+                        .DataSource(new[] {
+                    new { Product = "Shinhan - Vui Sống", Val = 35000000 },
+                    new { Product = "Shinhan - Thành Tài", Val = 45000000 },
+                    new { Product = "Shinhan - Tâm An", Val = 63000000 },
+                    new { Product = "Shinhan - Sống Khỏe", Val = 77000000 },
+                    new { Product = "Shinhan - Credit Care", Val = 24000000 },
+                    new { Product = "Shinhan - Credit Care Plus", Val = 11000000 },
+                        })
+                        )
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <h1 class="h4 mb-3 form-title"><strong>Số lượng hợp đồng bán được theo sản phẩm</strong></h1>
+                    @(Html.DevExtreme().Chart()
+                        .ID("chartCountofContract")
+                        .Rotated(true).Size(s => s.Height(300))
+                        .DataSource(new[] {
+                    new { Product = "Shinhan - Vui Sống", Val = 35 },
+                    new { Product = "Shinhan - Thành Tài", Val = 45 },
+                    new { Product = "Shinhan - Tâm An", Val = 69 },
+                    new { Product = "Shinhan - Sống Khỏe", Val = 70 },
+                    new { Product = "Shinhan - Credit Care", Val = 23 },
+                    new { Product = "Shinhan - Credit Care Plus", Val = 18 },
+                        })
+                        .Series(s => s.Add().Label(l => l.Visible(true))
+                        .Color("#725dcf")
+                        .Type(SeriesType.Bar)
+                        .ArgumentField("Product")
+                        .ValueField("Val")
+                        )
+                        .CommonSeriesSettings(s => s
+                            .Label(l => l
+                            .Visible(true)
+                            .Font(f => f.Color("#000000"))
+                            .BackgroundColor("none")
+                            .Format(f => f
+                            .Type(Format.FixedPoint)
+                            .Precision(0)
+                            )
+                        )
+                        )
+                        .ValueAxis(a => a.Add().Tick(t => t.Visible(false)).Label(l => l.Visible(false)))
+                        .Legend(l => l.Visible(false))
+                        )
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <div class="row row-dashboard">
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 card-summary">
+                    <div class="col-12">
+                        <h1 class="h4 mb-3 form-title"><strong>Danh sách khách hàng</strong></h1>
+                    </div>
+                    <div class="col-12 card-summary">
+                        <a class="value-summary" onclick="onButtonCustomerListClicked()"><strong>352</strong></a>
+                        <br />
+                        <strong class="title-summary">Khách hàng</strong>
+                    </div>
+                </div>
+                <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 card-summary">
+                    <div class="col-12">
+                        <h1 class="h4 mb-3 form-title"><strong>Tổng giá trị hợp đồng</strong></h1>
+                    </div>
+                    <div class="col-12 card-summary">
+                        <a class="value-summary" onclick="onButtonPolicyListClicked()"><strong>350</strong></a>
+                        <br />
+                        <strong class="title-summary">Triệu VND</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-dashboard">
+                <h1 class="h4 mb-3 form-title"><strong>Danh sách hồ sơ yêu cầu bảo hiểm</strong></h1>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 card-summary">
+                    <a class="value-summary" onclick="onButtonEAppListClicked()"><strong>330</strong></a>
+                    <br />
+                    <strong class="title-summary">Đã nộp</strong>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 card-summary">
+                    <a class="value-summary" onclick="onButtonEAppListClicked()"><strong>25</strong></a>
+                    <br />
+                    <strong class="title-summary">Chờ thanh toán</strong>
+                </div>
+                <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 card-summary">
+                    <a class="value-summary" onclick="onButtonEAppListClicked()"><strong>178</strong></a>
+                    <br />
+                    <strong class="title-summary">Chưa hoàn tất</strong>
+                </div>
+            </div>
+            <div class="row row-dashboard">
+                <div class="col-12 col-sm-6 col-md-3 col-lg-4 col-xl-3">
+                    <div class="wrimagecard wrimagecard-topimage">
+                        <a onclick="onButtonProductListClicked()">
+                            <div class="wrimagecard-topimage_header">
+                                <center>
+                                    <img src="/images/icon/icon-product.png" class="icon-dashborad" />
+                                </center>
+                            </div>
+                            <div class="wrimagecard-topimage_title" style="color:#725dcf">
+                                <strong>
+                                    Danh sách khóa học
+                                    <br />
+                                    <span class="badge bg-primary" style="padding: 10px 10px 5px 10px;font-size: 22px;">2/8</span>
+
+                                </strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 col-lg-4 col-xl-3">
+                    <div class="wrimagecard wrimagecard-topimage">
+                        <a onclick="onButtonFinancialAnalysisClicked()">
+                            <div class="wrimagecard-topimage_header">
+                                <center>
+                                    <img src="/images/icon/icon-financial.png" class="icon-dashborad" />
+                                </center>
+                            </div>
+                            <div class="wrimagecard-topimage_title" style="color:#725dcf">
+                                <strong>
+                                    Thông tin về Agency
+                                </strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 col-lg-4 col-xl-3">
+                    <div class="wrimagecard wrimagecard-topimage">
+                        <a onclick="onButtonQuotationListClicked()">
+                            <div class="wrimagecard-topimage_header">
+                                <center>
+                                    <img src="/images/icon/icon-quotation.png" class="icon-dashborad" />
+                                </center>
+                            </div>
+                            <div class="wrimagecard-topimage_title" style="color:#725dcf">
+                                <strong>
+                                    Thông tin về Shinhan Life
+                                </strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 col-lg-4 col-xl-3">
+                    <div class="wrimagecard wrimagecard-topimage">
+                        <a onclick="onButtonEAppListClicked()">
+                            <div class="wrimagecard-topimage_header">
+                                <center><img src="/images/icon/icon-eapp.png" class="icon-dashborad" /></center>
+                            </div>
+                            <div class="wrimagecard-topimage_title" style="color:#725dcf">
+                                <strong>
+                                    Cơ hội thăng tiến
+                                </strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 col-lg-4 col-xl-3">
+                    <div class="wrimagecard wrimagecard-topimage">
+                        <a onclick="onButtonPaymentClicked()">
+                            <div class="wrimagecard-topimage_header">
+                                <center><img src="/images/icon/icon-payment.png" class="icon-dashborad" /></center>
+                            </div>
+                            <div class="wrimagecard-topimage_title" style="color:#725dcf">
+                                <strong>
+                                    Câu hỏi thường gặp
+                                </strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-3 col-lg-4 col-xl-3">
+                    <div class="wrimagecard wrimagecard-topimage">
+                        <a onclick="onButtonPolicyListClicked()">
+                            <div class="wrimagecard-topimage_header">
+                                <center>
+                                    <img src="/images/icon/icon-contract.png" class="icon-dashborad" />
+                                </center>
+                            </div>
+                            <div class="wrimagecard-topimage_title" style="color:#725dcf">
+                                <strong>
+                                    Hỗ trợ từ Shinhan Life
+                                </strong>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("PopupFirstLogin")
+
+<script>
+     $(document).ready(function () {
+        var modal = document.getElementById("popupFirstLogin");
+        modal.classList.add("show", "in");
+        modal.style.display = "block";
+    });
+
+    function customizeLegendItems(items) {
+        var sortedItems = [];
+
+        items.forEach(function (item) {
+            var startIndex = item.series.stack === "Male" ? 0 : 3;
+            sortedItems.splice(startIndex, 0, item);
+        });
+        return sortedItems;
+    }
+
+    function onButtonCustomerListClicked() {
+        location.href = '@Url.Action("Index", "Customer", new { area = "Functions" })';
+    }
+
+    function onButtonEAppListClicked() {
+        location.href = '@Url.Action("Index", "eApplication", new { area = "Functions" })';
+    }
+
+    function onButtonProductListClicked() {
+        location.href = '@Url.Action("Index", "Product", new { area = "Functions" })';
+    }
+
+    function onButtonFinancialAnalysisClicked() {
+        location.href = '@Url.Action("Index", "FinancialAnalysis", new { area = "Functions" })';
+    }
+
+    function onButtonQuotationListClicked() {
+        location.href = '@Url.Action("Index", "Quotation", new { area = "Functions" })';
+    }
+
+    function onButtonPaymentClicked() {
+        location.href = '@Url.Action("Index", "Payment", new { area = "Functions" })';
+    }
+
+    function onButtonPolicyListClicked() {
+        location.href = '@Url.Action("Index", "Policy", new { area = "Functions" })';
+    }
+</script>

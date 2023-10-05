@@ -1,0 +1,161 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+
+<div class="container-fluid p-0" id="partialVerticalViewStep">
+    <h1 class="h5 mb-3 form-title">
+        Hồ sơ yêu cầu bảo hiểm
+        <i class="fa fa-caret-right" aria-hidden="true"></i>
+        <strong>Khách hàng</strong>
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <ul class="progressbar five-step">
+                <li class="active" onclick="onVerticalProgressBarClicked('Customer')">Khách hàng</li>
+                <li onclick="onVerticalProgressBarClicked('Quotation')">Bảng minh họa</li>
+                <li onclick="onVerticalProgressBarClicked('eApplication')">Hồ sơ yêu cầu bảo hiểm</li>
+                <li onclick="onVerticalProgressBarClicked('FinancialConsultingReport')">Báo cáo tư vấn tài chính</li>
+                <li onclick="onVerticalProgressBarClicked('Document')">Chứng từ</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12">
+            <div class="card card-body form-control-ui">
+                <div class="row button-right-row">
+                    <div class="col-md-12">
+                        <button class="btn btn-purple-style" type="submit" onclick="onPopupChooseCustomerClicked()">Chọn khách hàng</button>
+                    </div>
+                </div>
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>Thông tin khách hàng</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse01">
+                    <div class="custom-tab">
+                        <div class="nav-tabs-custom" style="background-color: #fff;">
+                            <ul class="nav nav-tabs">
+                                <li class="active" id="tabGeneralInfor">
+                                    <a href="#tab1" data-toggle="tab">Thông tin chung</a>
+                                </li>
+                                <li id="tabCareer">
+                                    <a href="#tab2" data-toggle="tab">Nghề nghiệp</a>
+                                </li>
+                                <li id="tabContactInfor">
+                                    <a href="#tab3" data-toggle="tab">Thông tin liên lạc</a>
+                                </li>
+                                <li id="tabAddress">
+                                    <a href="#tab4" data-toggle="tab">Địa chỉ</a>
+                                </li>
+                                <li id="tabFATCA">
+                                    <a href="#tab5" data-toggle="tab">Khai báo FATCA</a>
+                                </li>
+                                <li id="tabGeneralQuestions">
+                                    <a href="#tab6" data-toggle="tab">Câu hỏi chung</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+                                    <div style="padding: 10px">
+                                        @await Html.PartialAsync("POInformationPartialViewSub")
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <div style="padding: 10px">
+                                        @await Html.PartialAsync("POCareerPartialViewSub")
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab3">
+                                    <div style="padding: 10px">
+                                        @await Html.PartialAsync("POContactInforPartialViewSub")
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab4">
+                                    <div style="padding: 10px">
+                                        @await Html.PartialAsync("POAddressPartialViewSub")
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab5">
+                                    <div style="padding: 10px">
+                                        @await Html.PartialAsync("POFATCAPartialViewSub")
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab6">
+                                    <div style="padding: 10px">
+                                        @await Html.PartialAsync("POGeneralQuestionPartialViewSub")
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row button-search-row">
+                    <div class="col-md-12">
+                        <button class="btn btn-purple-style" type="submit" onclick="onBackToeAppListClicked()"><span class="glyphicon glyphicon-triangle-left"></span> Trở về</button>
+                        <button class="btn btn-purple-style" type="submit" onclick="onVerticalProgressBarClicked('Quotation')">Tiếp theo <span class="glyphicon glyphicon-triangle-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+@await Html.PartialAsync("PopupChooseCustomer")
+
+<script>
+    function onPopupChooseCustomerClicked() {
+        $("#gridChooseCustomerList").dxDataGrid({
+            dataSource: DevExpress.data.AspNet.createStore({
+                loadUrl: '@Url.Action("GetCustomerList", "Customer", new { area = "Functions" })',
+            }),
+            showBorders: true,
+            selection: {
+                mode: "single"
+            },
+            columns: [
+                { dataField: "FullName", caption: "Họ và tên", width: 200 },
+                { dataField: "Gender", caption: "Giới tính", width: 100 },
+                { dataField: "Birthday", caption: "Ngày sinh", dataType: "datetime", format: "dd/MM/yyyy", alignment: "center", width: 120 },
+                { dataField: "HasIN", caption: "Có số định danh", dataType: "boolean", alignment: "center", width: 150 },
+                { dataField: "IdentificationNumber", caption: "Số định danh", width: 120 },
+                { dataField: "BirthNumber", caption: "Số giấy khai sinh", width: 150 },
+                { dataField: "IdNumber", caption: "Số giấy tờ tùy thân", width: 150 },
+                { dataField: "IssuedDate", caption: "Ngày cấp", dataType: "datetime", format: "dd/MM/yyyy", alignment: "center", width: 120 },
+                { dataField: "IssuedPlace", caption: "Nơi cấp", dataType: "datetime", format: "dd/MM/yyyy", alignment: "center", width: 120 }
+            ],
+            columnHidingEnabled: true,
+            allowColumnResizing: true,
+            columnAutoWidth: true,
+            columnMinWidth: 50,
+            showRowLines: true,
+            filterRow: {
+                visible: true
+            },
+            headerFilter: {
+                visible: false
+            },
+            groupPanel: {
+                visible: false
+            },
+            grouping: {
+                autoExpandAll: false
+            },
+            remoteOperations: false,
+            paging: {
+                pageSize: 10
+            },
+            pager: {
+                showPageSizeSelector: true,
+                allowedPageSizes: [5, 10, 20],
+                showInfo: true
+            }
+        });
+
+        var modal = document.getElementById("popupChooseCustomer");
+        modal.classList.add("show", "in");
+        modal.style.display = "block";
+    }
+</script>
+

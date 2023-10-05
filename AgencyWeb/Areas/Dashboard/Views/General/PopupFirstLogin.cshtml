@@ -1,0 +1,76 @@
+﻿<div class="modal fade" id="popupFirstLogin" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true" style="background: #00000080;">
+    <div class="modal-dialog modal-md" style="max-height:90%; margin-top: 100px;">
+        <div class="modal-content" style="max-height: 90%; overflow-y: auto;">
+            <div class="modal-header">
+                <h1 class="h4 mb-3 form-title"><strong>Cập nhật thông tin cá nhân</strong></h1>
+                <p>Việc cập nhật thông tin sẽ giúp Shinhan Life hỗ trợ bạn tốt hơn!</p>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class="form-group" style="display: flex;">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" style="width: 60px;" alt="Avatar" />
+                            <div style="padding: 0px 10px;">
+                                <h4><strong>Vũ Trường Giang</strong></h4>
+                                <p>Tư vấn viên tiềm năng</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            @(Html.DevExtreme().TextBox()
+                                .ElementAttr("class", "required-validation")
+                                .Label("Họ và tên").Value("Vũ Trường Giang").LabelMode(EditorLabelMode.Floating)
+                                .MaxLength(50).ShowClearButton(true))
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            @(Html.DevExtreme().TextBox()
+                                .ElementAttr("class", "required-validation")
+                                .Label("Số điện thoại").Value("0978473677").LabelMode(EditorLabelMode.Floating)
+                                .MaxLength(50).ShowClearButton(true))
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            @(Html.DevExtreme().TextBox()
+                                .ElementAttr("class", "required-validation")
+                                .Label("Email").Value("vutruonggiang@gmail.com").LabelMode(EditorLabelMode.Floating)
+                                .MaxLength(50).ShowClearButton(true))
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-6col-lg-6 col-xl-6">
+                        <div class="form-group">
+                            @(Html.DevExtreme().DateBox()
+                                .Type(DateBoxType.Date)
+                                .DisplayFormat("dd/MM/yyyy")
+                                .UseMaskBehavior(true)
+                                .Placeholder("dd/mm/yyyy")
+                                .Label("Ngàysinh").LabelMode(EditorLabelMode.Floating)
+                                .ElementAttr("class", "required-validation").ShowClearButton(true)
+                                .Value(DateTime.Now.AddYears(-20))
+                                )
+                        </div>
+                    </div>                  
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnSaveFirstLogin" onclick="onButtonSaveFirstLoginClicked()" type="button" class="btn btn-purple-style">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function onButtonSaveFirstLoginClicked() {
+        var modal = document.getElementById("popupFirstLogin");
+        modal.classList.remove("show", "in");
+        modal.style.display = "none";
+
+        //var _00019 = await GetMesssageAsync('00019', '@Url.Action("GetMesssageAsync", "Common", new { area = "" })');
+        notify("Cập nhật dữ liệu thành công", "success");
+    }
+
+</script>

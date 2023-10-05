@@ -1,0 +1,72 @@
+﻿@await Html.PartialAsync("CustomerPartialView")
+
+<script>
+    function onBackToeAppListClicked() {
+        location.href = '@Url.Action("Index", "eApplication", new { area = "Functions" })';
+    }
+
+    function onSaveToeApplicationClicked() {
+        notify("Cập nhật dữ liệu thành công", "success");
+
+        location.href = '@Url.Action("Index", "eApplication", new { area = "Functions" })';
+    }
+
+    function onVerticalProgressBarClicked(step) {
+        $.ajax({
+            url: '@Url.Action("StepVerticalPartialView", "eApplication", new { area = "Functions" })',
+            type: 'POST',
+            data: {
+                param: step
+            },
+            async: true,
+            success: function (result) {
+                $('#partialVerticalViewStep').html(result);
+            },
+        });
+    }
+
+    function SetValueProgressCircle(xvaluenow, step) {
+        /* Vars */
+        var rotatenum = 'rotate(' + (xvaluenow - 1) * 30 + 'deg)';
+        var progress = document.getElementById('progress');
+        var progress_circle = document.getElementById('progress-circle');
+        var progress_style = document.getElementById('progress-style');
+
+        /* Fix: Cover gap with shadow */
+        if (xvaluenow == 0) {
+            var shadowfix = "0";
+        }
+        else {
+            var shadowfix = "1px";
+        }
+
+        /* Inserting values */
+        progress.innerHTML = xvaluenow + '/' + step;
+        progress_circle.setAttribute("aria-valuenow", xvaluenow);
+        progress_style.innerHTML = " \
+                .p-h:before, .p-f, .p-f:before{ \
+                -moz-transform: " + rotatenum + "; \
+                -webkit-transform: " + rotatenum + "; \
+                -o-transform: " + rotatenum + "; \
+                -ms-transform: " + rotatenum + "; \
+                transform: " + rotatenum + "; \
+                -webkit-box-shadow: 0 0 0 " + shadowfix + " #828282; \
+                  box-shadow: 0 0 0 " + shadowfix + " #828282;}\
+                \ ";
+    }
+
+    function onProgressBarClicked(step) {
+        $.ajax({
+            url: '@Url.Action("StepPartialView", "eApplication", new { area = "Functions" })',
+            type: 'POST',
+            data: {
+                param: step
+            },
+            async: true,
+            success: function (result) {
+                $('#partialViewStep').html(result);
+            },
+        });
+    }
+</script>
+

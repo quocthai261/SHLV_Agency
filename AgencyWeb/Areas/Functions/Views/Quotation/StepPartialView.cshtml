@@ -1,0 +1,26 @@
+﻿@{
+    if (ViewBag.Step == "QuoDetailPolicyOwnerPartialView")
+    {
+        @await Html.PartialAsync("QuoDetailPolicyOwnerPartialView")
+    }
+    else if (ViewBag.Step == "QuoDetailChooseProductPartialView")
+    {
+        @await Html.PartialAsync("QuoDetailChooseProductPartialView")
+    }
+    else if (ViewBag.Step == "QuoDetailLifeAssuredPartialView")
+    {
+        @await Html.PartialAsync("QuoDetailLifeAssuredPartialView")
+    }
+    else if (ViewBag.Step == "QuoDetailProductInfomationPartialView")
+    {
+        @await Html.PartialAsync("QuoDetailProductInfomationPartialView")
+    }
+    else if (ViewBag.Step == "QuoDetailInformationPartialView")
+    {
+        @await Html.PartialAsync("QuoDetailInformationPartialView")
+    }
+    else
+    {
+        @await Html.PartialAsync("QuoDetailPolicyOwnerPartialView")
+    }
+}

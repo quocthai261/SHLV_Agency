@@ -1,0 +1,132 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<eApplicationController> HtmlLocalizer
+
+<div class="container-fluid p-0" id="partialVerticalViewStep">
+    <h1 class="h5 mb-3 form-title">
+        Hồ sơ yêu cầu bảo hiểm
+        <i class="fa fa-caret-right" aria-hidden="true"></i>
+        <strong>Chứng từ</strong>
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <ul class="progressbar five-step">
+                <li class="active" onclick="onVerticalProgressBarClicked('Customer')">Khách hàng</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('Quotation')">Bảng minh họa</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('eApplication')">Hồ sơ yêu cầu bảo hiểm</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('FinancialConsultingReport')">Báo cáo tư vấn tài chính</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('Document')">Chứng từ</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card card-body form-control-ui">
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>Hồ sơ</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse01">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            @(Html.DevExtreme().DataGrid()
+                                    .ID("gridDocumenteApp")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("eApplication")
+                                    .LoadAction("GetDocumenteAppList")
+                                    )
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(DocumenteAppModel.DocumentName)).Caption("Tên chứng từ").Width(300);
+                                        columns.Add().DataField(nameof(DocumenteAppModel.FileName)).Caption("Tên file");
+                                        columns.Add().DataField(nameof(DocumenteAppModel.DocumentType)).Caption("Loại chứng từ").Width(170);
+                                        columns.Add().DataField(nameof(DocumenteAppModel.UpdatedDate)).Caption("Ngày cập nhật").DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy  HH:mm").Alignment(HorizontalAlignment.Center).Width(170);
+                                        columns.Add().DataField(nameof(DocumenteAppModel.Seen)).Caption("Đã xem").DataType(GridColumnDataType.Boolean).Alignment(HorizontalAlignment.Center).Width(170);
+                                        columns.Add().Caption("").Width(10)
+                                    .CellTemplate(@<text>
+                                        <span class="glyphicon glyphicon-cloud-download  icon-grid"></span>
+                                    </text>);
+                                    })
+                                .ColumnHidingEnabled(true)
+                                .AllowColumnResizing(true)
+                                .ColumnAutoWidth(true)
+                                .ColumnMinWidth(50)
+                                .ShowRowLines(true)
+                                .FilterRow(f => f.Visible(false))
+                                .HeaderFilter(f => f.Visible(false))
+                                .GroupPanel(p => p.Visible(false))
+                                .Grouping(g => g.AutoExpandAll(true))
+                                .RemoteOperations(false)
+                                .WordWrapEnabled(true)
+                                )
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse02" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>Chứng từ khác</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse02">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            @(Html.DevExtreme().DataGrid()
+                                    .ID("gridDocument")
+                                    .DataSource(d => d.WebApi()
+                                    .Area("Functions")
+                                    .Controller("eApplication")
+                                    .LoadAction("GetDocumentList")
+                                    )
+                                    .ShowBorders(true)
+                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                    .Columns(columns =>
+                                    {
+                                        columns.Add().DataField(nameof(DocumentModel.Group)).GroupCellTemplate(new JS("function(element, options) { element.text(options.value); }")).GroupIndex(0);
+                                        columns.Add().DataField(nameof(DocumentModel.DocumentName)).Caption("Tên chứng từ").Width(300);
+                                        columns.Add().DataField(nameof(DocumentModel.FileName)).Caption("Tên file");
+                                        columns.Add().DataField(nameof(DocumentModel.DocumentType)).Caption("Định dạng").Width(170);
+                                        columns.Add().Caption("").Width(90)
+                                    .CellTemplate(@<text>
+                                        <span class="glyphicon glyphicon-cloud-upload icon-grid"></span> <span class="glyphicon glyphicon-cloud-download  icon-grid"></span> <span class="glyphicon glyphicon-trash icon-grid"></span>
+                                    </text>);
+                                    })
+                                .ColumnHidingEnabled(true)
+                                .AllowColumnResizing(true)
+                                .ColumnAutoWidth(true)
+                                .ColumnMinWidth(50)
+                                .ShowRowLines(true)
+                                .FilterRow(f => f.Visible(false))
+                                .HeaderFilter(f => f.Visible(false))
+                                .GroupPanel(p => p.Visible(false))
+                                .Grouping(g => g.AutoExpandAll(true))
+                                .RemoteOperations(false)
+                                .WordWrapEnabled(true)
+                                )
+                        </div>
+                    </div>
+                </div>
+                <div class="row button-search-row">
+                    <div class="col-md-12">
+                        <button class="btn btn-purple-style" type="submit" onclick="onVerticalProgressBarClicked('FinancialConsultingReport')"><span class="glyphicon glyphicon-triangle-left"></span> Trở về</button>
+                        <button class="btn btn-purple-style" type="submit" onclick="onButtonDocumentNextClicked()">Lưu <span class="glyphicon glyphicon-triangle-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("PopupOTP")
+
+<script>
+    function onButtonDocumentNextClicked() {
+        var modal = document.getElementById("popupOTP");
+        modal.classList.add("show", "in");
+        modal.style.display = "block";
+    }
+</script>

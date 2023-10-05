@@ -1,0 +1,104 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+
+<div class="container-fluid p-0" id="partialVerticalViewStep">
+    <h1 class="h5 mb-3 form-title">
+        Hồ sơ yêu cầu bảo hiểm
+        <i class="fa fa-caret-right" aria-hidden="true"></i>
+        <strong>Bảng minh họa</strong>
+    </h1>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <ul class="progressbar five-step">
+                <li class="active" onclick="onVerticalProgressBarClicked('Customer')">Khách hàng</li>
+                <li class="active" onclick="onVerticalProgressBarClicked('Quotation')">Bảng minh họa</li>
+                <li onclick="onVerticalProgressBarClicked('eApplication')">Hồ sơ yêu cầu bảo hiểm</li>
+                <li onclick="onVerticalProgressBarClicked('FinancialConsultingReport')">Báo cáo tư vấn tài chính</li>
+                <li onclick="onVerticalProgressBarClicked('Document')">Chứng từ</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card card-body form-control-ui">
+                <p>
+                    <a class="form-title" data-bs-toggle="collapse" href="#collapse01" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <strong>Thông tin bảng minh họa</strong>
+                    </a>
+                </p>
+                <div class="collapse show" id="collapse01">
+                    <div class="custom-tab">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <div class="form-group">
+                                    @(Html.DevExtreme().DataGrid<RiderByCustomerModel>()
+                                        .ID("gridQuotationInformation")
+                                        .DataSource(d => d.WebApi()
+                                        .Area("Functions")
+                                        .Controller("Quotation")
+                                        .LoadAction("GetQuotationInformation")
+                                        )
+                                        .ShowBorders(true)
+                                        .Selection(s => s.Mode(SelectionMode.Single))
+                                        .Columns(columns =>
+                                        {
+                                            columns.Add().DataField(nameof(RiderByCustomerModel.Group)).GroupCellTemplate(new JS("function(element, options) { element.text(options.value); }")).GroupIndex(0);
+                                            columns.Add().DataField(nameof(RiderByCustomerModel.ProductName)).Caption("Tên sản phẩm bổ sung");
+                                            columns.Add().DataField(nameof(RiderByCustomerModel.SumAssured)).Caption("Số tiền bảo hiểm").DataType(GridColumnDataType.Number).Format(Format.FixedPoint).Alignment(HorizontalAlignment.Right).Width(170);
+                                            columns.Add().DataField(nameof(RiderByCustomerModel.PolicyTerm)).Caption("Thời hạn bảo hiểm").Caption("Thời hạn đóng phí").DataType(GridColumnDataType.Number).Format(Format.FixedPoint).Alignment(HorizontalAlignment.Right).Width(170);
+                                            columns.Add().DataField(nameof(RiderByCustomerModel.PremiumTerm)).Caption("Thời hạn đóng phí").DataType(GridColumnDataType.Number).Format(Format.FixedPoint).Alignment(HorizontalAlignment.Right).Width(170);
+                                            columns.Add().DataField(nameof(RiderByCustomerModel.Premium)).Caption("Định kỳ đóng phí").DataType(GridColumnDataType.Number).Format(Format.FixedPoint).Alignment(HorizontalAlignment.Right).Width(300);
+                                        })
+                                        .ColumnHidingEnabled(true)
+                                        .AllowColumnResizing(true)
+                                        .ColumnAutoWidth(true)
+                                        .ColumnMinWidth(50)
+                                        .ShowRowLines(true)
+                                        .FilterRow(f => f.Visible(false))
+                                        .HeaderFilter(f => f.Visible(false))
+                                        .GroupPanel(p => p.Visible(false))
+                                        .Grouping(g => g.AutoExpandAll(true))
+                                        .RemoteOperations(false)
+                                        .Summary(s => s.GroupItems(items =>
+                                        {
+                                            items.AddFor(m => m.ProductName)
+                                            .SummaryType(SummaryType.Count)
+                                            .DisplayFormat("{0} sản phẩm");
+
+                                            items.AddFor(m => m.Premium)
+                                            .SummaryType(SummaryType.Sum)
+                                            .ValueFormat(Format.FixedPoint)
+                                            .ShowInGroupFooter(false)
+                                            .AlignByColumn(true)
+                                            .DisplayFormat("Tổng: {0}");
+                                        }).TotalItems(items =>
+                                        {
+                                            @*items.AddFor(m => m.OrderNumber)
+                                    .SummaryType(SummaryType.Count);
+
+                                    items.AddFor(m => m.OrderDate)
+                                    .SummaryType(SummaryType.Min)
+                                    .CustomizeText(@<text>
+                                    function(data) { return "First: " + formatDate(data.value); }
+                                    </text>);*@
+                                            items.AddFor(m => m.Premium)
+                                                                    .SummaryType(SummaryType.Sum)
+                                                                    .ValueFormat(Format.FixedPoint)
+                                                                    .DisplayFormat("Tổng chi phí: {0}");
+                                        }))
+                                        )
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row button-search-row">
+                    <div class="col-md-12">
+                        <button class="btn btn-purple-style" type="submit" onclick="onVerticalProgressBarClicked('Customer')"><span class="glyphicon glyphicon-triangle-left"></span> Trở về</button>
+                        <button class="btn btn-purple-style" type="submit" onclick="onVerticalProgressBarClicked('eApplication')">Tiếp theo <span class="glyphicon glyphicon-triangle-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

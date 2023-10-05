@@ -1,0 +1,233 @@
+﻿@using AgencyWeb.Models
+@using AgencyWeb.Areas.Functions.Controllers
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IHtmlLocalizer<eApplicationController> HtmlLocalizer
+
+@{
+    var confirmDeleteMessage = String.Format(@HtmlLocalizer["ConfirmDeleteMessage"].Value);
+    var confirmDeleteTitle = String.Format(@HtmlLocalizer["ConfirmDeleteTitle"].Value);
+}
+
+<div class="container-fluid p-0">
+    <div class="row">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 card-summary-grid-left">
+            <h1 class="h4 mb-3 form-title"><strong>Danh sách hồ sơ yêu cầu bảo hiểm</strong></h1>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 card-summary-grid-right">
+            <div class="card card-summary-grid-value">
+                <div class="card-body">
+                    <a>
+                        <strong class="value-summary-grid">104</strong>
+                        <br />
+                        <strong class="title-summary-grid">Chưa hoàn tất</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="card card-summary-grid-value">
+                <div class="card-body">
+                    <a>
+                        <strong class="value-summary-grid">5</strong>
+                        <br />
+                        <strong class="title-summary-grid">Chờ thanh toán</strong>
+                    </a>
+                </div>
+            </div>
+            <div class="card card-summary-grid-value">
+                <div class="card-body">
+                    <a>
+                        <strong class="value-summary-grid">328</strong>
+                        <br />
+                        <strong class="title-summary-grid">Hoàn tất</strong>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card flex-fill w-100 form-control-ui">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Tìm kiếm</h5>
+                    <button class="btn btn-purple-invert btn-filter" type="submit" onclick="onAddNeweApplicationClicked()"><span class="glyphicon glyphicon-plus"></span> Thêm mới</button>
+                </div>
+                <div class="card-body py-3">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .Label("Mã hồ sơ YCBH").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(50).ShowClearButton(true))
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().TextBox()
+                                    .Label("Người mua bảo hiểm").LabelMode(EditorLabelMode.Floating)
+                                    .MaxLength(100).ShowClearButton(true))
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                            <div class="form-group">
+                                @(Html.DevExtreme().SelectBox()
+                                    .ID("mainproduct")
+                                    .DataSource(d => d.WebApi().Area("Functions").Controller("Product").LoadAction("GetProductListApi"))
+                                    .DisplayExpr("ProductName")
+                                    .ValueExpr("ProductCode")
+                                    .Placeholder("Chọn")
+                                    .SearchEnabled(true).Label("Sản phẩm chính").LabelMode(EditorLabelMode.Floating)
+                                    .ShowClearButton(true)
+                                    )
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row button-search-row">
+                        <div class="col-md-12">
+                            <button class="btn btn-purple-style" type="submit">@HtmlLocalizer["Delete"]</button>
+                            <button class="btn btn-purple-style" type="submit">@HtmlLocalizer["Search"]</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card flex-fill w-100 form-control-ui">
+                <div class="card-body py-3">
+                    @(
+                        Html.DevExtreme().DataGrid()
+                        .ID("grideApplication")
+                        .DataSource(d => d.WebApi()
+                        .Area("Functions")
+                        .Controller("eApplication")
+                        .LoadAction("GeteAppList")
+                        )
+                        .ShowBorders(true)
+                        .OnRowDblClick("onRowDblClickGrideApplication")
+                        .Selection(s => s.Mode(SelectionMode.Single))
+                        //.Export(e => e.Enabled(true).AllowExportSelectedData(false)).OnExporting("exportingGrideApplication")
+                        .Editing(editing =>
+                        {
+                            editing.Texts(textBuilder =>
+                            {
+                                textBuilder.ConfirmDeleteMessage(confirmDeleteMessage);
+                                textBuilder.ConfirmDeleteTitle(confirmDeleteTitle);
+                            });
+                        })
+                        .Columns(columns =>
+                        {
+                                columns.Add().Caption("").Width(90)
+                            .CellTemplate(@<text>
+                                <span class="glyphicon glyphicon-eye-open icon-grid"></span>  <span class="glyphicon glyphicon-edit icon-grid"></span>  <span class="glyphicon glyphicon-trash icon-grid"></span>
+                            </text>);
+                            columns.Add().DataField(nameof(eApplicationModel.eAppNo)).Caption("Số hồ sơ").Width(130).CssClass("bold-black");
+                            columns.Add().DataField(nameof(eApplicationModel.PolicyNo)).Caption("Số hợp đồng").Width(120).CssClass("bold-black");
+                            columns.Add().DataField(nameof(eApplicationModel.PoName)).Caption("Tên BMBH").MinWidth(150);
+                            columns.Add().DataField(nameof(eApplicationModel.LaName)).Caption("Tên NĐBH").MinWidth(150);
+                            columns.Add().DataField(nameof(eApplicationModel.ProductName)).Caption("Tên sản phẩm").MinWidth(200);
+                            columns.Add().DataField(nameof(eApplicationModel.Status)).Caption("Trạng thái").Width(120);
+                            columns.Add().DataField(nameof(eApplicationModel.Step)).Caption("Tiến trình").Alignment(HorizontalAlignment.Center).Width(80);
+                            columns.Add().DataField(nameof(eApplicationModel.NextStep)).Caption("Bước tiếp theo").Width(150).CssClass("bold-purple");
+                            columns.Add().DataField(nameof(eApplicationModel.VoiceRecord)).Caption("Voice Record").Width(120);
+                            columns.Add().DataField(nameof(eApplicationModel.ExpDate)).Caption("Ngày hết liệu lực").DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy").Alignment(HorizontalAlignment.Center).Width(150);
+                            columns.Add().DataField(nameof(eApplicationModel.CreationUser)).Caption("Người tạo").Width(100);
+                            columns.Add().DataField(nameof(eApplicationModel.CreationDate)).Caption("Ngày tạo").DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy").Alignment(HorizontalAlignment.Center).Width(100);
+                            columns.Add().DataField(nameof(eApplicationModel.UpdatedDate)).Caption("Ngày cập nhật").DataType(GridColumnDataType.DateTime).Format("dd/MM/yyyy").Alignment(HorizontalAlignment.Center).Width(120);
+                            columns.Add().DataField(nameof(eApplicationModel.IsExpertised)).Caption("Thẩm định nhanh").Alignment(HorizontalAlignment.Center).Width(150).CellTemplate(@<text>
+                                <% if(data.IsExpertised == true) { %>
+                                    @(Html.DevExtreme().Button()
+                                                .ElementAttr("class", "btn btn-purple-style btn-on-grid")
+                                                .Text("Xem kết quả").OnClick("function(e) { showPopupExpertised(e, data) }")
+                                                )
+                                    <% } %>
+                                </text>);
+                        })
+                        .ColumnHidingEnabled(true)
+                        .AllowColumnResizing(true)
+                        .ColumnAutoWidth(true)
+                        .ColumnMinWidth(50)
+                        .ShowRowLines(true)
+                        .WordWrapEnabled(true)
+                        .FilterRow(f => f.Visible(true))
+                        .HeaderFilter(f => f.Visible(false))
+                        .GroupPanel(p => p.Visible(false))
+                        .Grouping(g => g.AutoExpandAll(false))
+                        .RemoteOperations(false)
+                        .WordWrapEnabled(true)
+                        .Paging(paging => paging.PageSize(10))
+                        .Pager(pager =>
+                        {
+                            pager.ShowPageSizeSelector(true);
+                            pager.AllowedPageSizes(new[] { 5, 10, 20 });
+                            pager.ShowInfo(true);
+                        })
+                        )
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("PopupExpertised")
+
+<script>
+    function onAddNeweApplicationClicked() {
+        location.href = '@Url.Action("eApplicationGeneral", "eApplication", new { area = "Functions" })';
+    }
+
+    function exportingGrideApp(e) {
+        var workbook = new ExcelJS.Workbook();
+        var worksheet = workbook.addWorksheet('eApplication');
+
+        DevExpress.excelExporter.exportDataGrid({
+            component: e.component,
+            worksheet: worksheet,
+            autoFilterEnabled: true
+        }).then(function () {
+            workbook.xlsx.writeBuffer().then(function (buffer) {
+                saveAs(new Blob([buffer], { type: 'application/octet-stream' }), 'eApplicationList.xlsx');
+            });
+        });
+        e.cancel = true;
+    }
+
+    function showPopupExpertised(e, data) {
+        var modal = document.getElementById("popupExpertised");
+        modal.classList.add("show", "in");
+        modal.style.display = "block";
+    }
+
+    function onRowDblClickGrideApplication() {
+        const dataGridInstance = $("#grideApplication").dxDataGrid("instance");
+        const selectedRowsData = dataGridInstance.getSelectedRowsData();
+        //console.log("selectedRowsData", selectedRowsData)
+        if (selectedRowsData.length === 0) {
+            notify("Bạn chưa chọn hồ sơ!", 'warning')
+        } else {
+            const selectedRowData = selectedRowsData[0];
+            if (selectedRowData.NextStep == 'Phân tích nhu cầu tài chính') {
+                location.href = '@Url.Action("Index", "FinancialAnalysis", new { area = "Functions" })';
+            }
+            else if (selectedRowData.NextStep == 'Bảng minh họa') {
+                location.href = '@Url.Action("Index", "Quotation", new { area = "Functions" })';
+            }
+            else if (selectedRowData.NextStep == 'Hồ sơ yêu cầu bảo hiểm') {
+                location.href = '@Url.Action("Index", "eApplication", new { area = "Functions" })';
+            }
+            else if (selectedRowData.NextStep == 'Báo cáo tư vấn tài chính') {
+                location.href = '@Url.Action("Index", "FinancialConsultingReport", new { area = "Functions" })';
+            }
+            else if (selectedRowData.NextStep == 'Chứng từ') {
+                location.href = '@Url.Action("Index", "Document", new { area = "Functions" })';
+            }
+            else if (selectedRowData.NextStep == 'Thanh toán') {
+                location.href = '@Url.Action("Index", "Payment", new { area = "Functions" })';
+            }
+            else {
+                notify("Hồ sơ đã hoàn tất hoặc từ chối. Không thể thực hiện điều chỉnh!", 'warning')
+            }
+        }
+    }
+</script>
