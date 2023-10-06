@@ -13,15 +13,16 @@
         {
             <div class="col-6 col-md-6 col-xxl-6 d-flex order-6 order-xxl-6">
                 <div class="card flex-fill w-100 form-control-ui">
-                    <div class="card-body py-3">
+                    <div class="card-body py-3 card-news">
                         <div class="row">
                             <img decoding="async" width="900" height="600" src="@p.Image" />
-                            <p class="newsTitle"><strong><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">@p.Title</a></strong></p>
+                            <p class="newsTitle"><strong><a class="news-title" asp-controller="NewsAndEvent" asp-action="NewsAndEventDetail" asp-route-id="@p.NewsAndEventId">@p.Title</a></strong></p>
                             <p class="newsPublishedDate">@p.PublishedDate</p>
                             <p class="newsSummary">@p.Summary</p>
-                                <a asp-controller="NewsAndEvent" asp-action="NewsAndEventDetail" asp-route-id="@p.NewsAndEventId">
-                                    <p class="newsDetail">Tìm hiểm thêm</p></a>
-                            
+                            <a class="newsDetail" asp-controller="NewsAndEvent" asp-action="NewsAndEventDetail" asp-route-id="@p.NewsAndEventId">
+                            @*     <p class="newsDetail">Tìm hiểm thêm</p> *@
+                                Tìm hiểm thêm
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -29,43 +30,43 @@
 
         }
         @* <div class="col-6 col-md-6 col-xxl-6 d-flex order-6 order-xxl-6">
-            <div class="card flex-fill w-100 form-control-ui">
-                <div class="card-body py-3">
-                    <div class="row">
-                        <img decoding="async" width="900" height="600" src="https://pws-prod.shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png" alt="" class="wp-image-1170" srcset="https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png 900w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-300x200.png 300w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-768x512.png 768w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-18x12.png 18w" sizes="(max-width: 900px) 100vw, 900px" />
-                        <p class ="newsTitle"><strong><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">SHINHAN LIFE VIỆT NAM TIẾP TỤC ĐỒNG HÀNH CÙNG BỆNH NHI UNG THƯ MÁU TRONG DỊP TẾT ĐOÀN VIÊN</a></strong></p>
-                        <p class="newsPublishedDate">15/09/2023</p>
-                        <p class="newsSummary">TP. Hồ Chí Minh, ngày 15/9/2023, Shinhan Life Việt Nam tiếp tục đồng hành cùng Bệnh viện Nhi đồng Thành Phố hỗ trợ cho các bệnh nhi ung thư máu có hoàn cảnh khó khăn nhân dịp Tết Trung thu.</p>
-                        <p class="newsDetail">Tìm hiểm thêm</p>
-                    </div>
-                </div>
-            </div>
+        <div class="card flex-fill w-100 form-control-ui">
+        <div class="card-body py-3">
+        <div class="row">
+        <img decoding="async" width="900" height="600" src="https://pws-prod.shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png" alt="" class="wp-image-1170" srcset="https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png 900w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-300x200.png 300w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-768x512.png 768w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-18x12.png 18w" sizes="(max-width: 900px) 100vw, 900px" />
+        <p class ="newsTitle"><strong><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">SHINHAN LIFE VIỆT NAM TIẾP TỤC ĐỒNG HÀNH CÙNG BỆNH NHI UNG THƯ MÁU TRONG DỊP TẾT ĐOÀN VIÊN</a></strong></p>
+        <p class="newsPublishedDate">15/09/2023</p>
+        <p class="newsSummary">TP. Hồ Chí Minh, ngày 15/9/2023, Shinhan Life Việt Nam tiếp tục đồng hành cùng Bệnh viện Nhi đồng Thành Phố hỗ trợ cho các bệnh nhi ung thư máu có hoàn cảnh khó khăn nhân dịp Tết Trung thu.</p>
+        <p class="newsDetail">Tìm hiểm thêm</p>
+        </div>
+        </div>
+        </div>
         </div>
         <div class="col-6 col-md-6 col-xxl-6 d-flex order-6 order-xxl-6">
-            <div class="card flex-fill w-100 form-control-ui">
-                <div class="card-body py-3">
-                    <div class="row">
-                        <img decoding="async" width="900" height="600" src="https://pws-prod.shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png" alt="" class="wp-image-1170" srcset="https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png 900w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-300x200.png 300w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-768x512.png 768w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-18x12.png 18w" sizes="(max-width: 900px) 100vw, 900px" />
-                        <p style="color:#333333;margin-bottom:0;padding-top:1em;padding-right:1.8em;padding-bottom:1em;padding-left:1.8em;font-size:18px"><strong><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">SHINHAN LIFE VIỆT NAM TIẾP TỤC ĐỒNG HÀNH CÙNG BỆNH NHI UNG THƯ MÁU TRONG DỊP TẾT ĐOÀN VIÊN</a></strong></p>
-                        <p style="margin-top:0;margin-bottom:0;padding-top:0;padding-right:30px;padding-bottom:10px;padding-left:30px">15/09/2023</p>
-                        <p style="color:#333333;padding-right:2em;padding-left:2em;font-size:15px">TP. Hồ Chí Minh, ngày 15/9/2023, Shinhan Life Việt Nam tiếp tục đồng hành cùng Bệnh viện Nhi đồng Thành Phố hỗ trợ cho các bệnh nhi ung thư máu có hoàn cảnh khó khăn nhân dịp Tết Trung thu.</p>
-                        <p style="color:#705dcf;padding-right:2em;padding-bottom:2em;padding-left:2em;font-size:12px;font-style:normal;font-weight:700;text-decoration:underline"><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">Tìm hiểm thêm</a></p>
-                    </div>
-                </div>
-            </div>
+        <div class="card flex-fill w-100 form-control-ui">
+        <div class="card-body py-3">
+        <div class="row">
+        <img decoding="async" width="900" height="600" src="https://pws-prod.shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png" alt="" class="wp-image-1170" srcset="https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png 900w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-300x200.png 300w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-768x512.png 768w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-18x12.png 18w" sizes="(max-width: 900px) 100vw, 900px" />
+        <p style="color:#333333;margin-bottom:0;padding-top:1em;padding-right:1.8em;padding-bottom:1em;padding-left:1.8em;font-size:18px"><strong><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">SHINHAN LIFE VIỆT NAM TIẾP TỤC ĐỒNG HÀNH CÙNG BỆNH NHI UNG THƯ MÁU TRONG DỊP TẾT ĐOÀN VIÊN</a></strong></p>
+        <p style="margin-top:0;margin-bottom:0;padding-top:0;padding-right:30px;padding-bottom:10px;padding-left:30px">15/09/2023</p>
+        <p style="color:#333333;padding-right:2em;padding-left:2em;font-size:15px">TP. Hồ Chí Minh, ngày 15/9/2023, Shinhan Life Việt Nam tiếp tục đồng hành cùng Bệnh viện Nhi đồng Thành Phố hỗ trợ cho các bệnh nhi ung thư máu có hoàn cảnh khó khăn nhân dịp Tết Trung thu.</p>
+        <p style="color:#705dcf;padding-right:2em;padding-bottom:2em;padding-left:2em;font-size:12px;font-style:normal;font-weight:700;text-decoration:underline"><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">Tìm hiểm thêm</a></p>
+        </div>
+        </div>
+        </div>
         </div>
         <div class="col-6 col-md-6 col-xxl-6 d-flex order-6 order-xxl-6">
-            <div class="card flex-fill w-100 form-control-ui">
-                <div class="card-body py-3">
-                    <div class="row">
-                        <img decoding="async" width="900" height="600" src="https://pws-prod.shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png" alt="" class="wp-image-1170" srcset="https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png 900w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-300x200.png 300w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-768x512.png 768w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-18x12.png 18w" sizes="(max-width: 900px) 100vw, 900px" />
-                        <p style="color:#333333;margin-bottom:0;padding-top:1em;padding-right:1.8em;padding-bottom:1em;padding-left:1.8em;font-size:18px"><strong><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">SHINHAN LIFE VIỆT NAM TIẾP TỤC ĐỒNG HÀNH CÙNG BỆNH NHI UNG THƯ MÁU TRONG DỊP TẾT ĐOÀN VIÊN</a></strong></p>
-                        <p style="margin-top:0;margin-bottom:0;padding-top:0;padding-right:30px;padding-bottom:10px;padding-left:30px">15/09/2023</p>
-                        <p style="color:#333333;padding-right:2em;padding-left:2em;font-size:15px">TP. Hồ Chí Minh, ngày 15/9/2023, Shinhan Life Việt Nam tiếp tục đồng hành cùng Bệnh viện Nhi đồng Thành Phố hỗ trợ cho các bệnh nhi ung thư máu có hoàn cảnh khó khăn nhân dịp Tết Trung thu.</p>
-                        <p style="color:#705dcf;padding-right:2em;padding-bottom:2em;padding-left:2em;font-size:12px;font-style:normal;font-weight:700;text-decoration:underline"><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">Tìm hiểm thêm</a></p>
-                    </div>
-                </div>
-            </div>
+        <div class="card flex-fill w-100 form-control-ui">
+        <div class="card-body py-3">
+        <div class="row">
+        <img decoding="async" width="900" height="600" src="https://pws-prod.shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png" alt="" class="wp-image-1170" srcset="https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1.png 900w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-300x200.png 300w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-768x512.png 768w, https://shinhanlifevn.com.vn/wp-content/uploads/2023/10/Picture1-1-18x12.png 18w" sizes="(max-width: 900px) 100vw, 900px" />
+        <p style="color:#333333;margin-bottom:0;padding-top:1em;padding-right:1.8em;padding-bottom:1em;padding-left:1.8em;font-size:18px"><strong><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">SHINHAN LIFE VIỆT NAM TIẾP TỤC ĐỒNG HÀNH CÙNG BỆNH NHI UNG THƯ MÁU TRONG DỊP TẾT ĐOÀN VIÊN</a></strong></p>
+        <p style="margin-top:0;margin-bottom:0;padding-top:0;padding-right:30px;padding-bottom:10px;padding-left:30px">15/09/2023</p>
+        <p style="color:#333333;padding-right:2em;padding-left:2em;font-size:15px">TP. Hồ Chí Minh, ngày 15/9/2023, Shinhan Life Việt Nam tiếp tục đồng hành cùng Bệnh viện Nhi đồng Thành Phố hỗ trợ cho các bệnh nhi ung thư máu có hoàn cảnh khó khăn nhân dịp Tết Trung thu.</p>
+        <p style="color:#705dcf;padding-right:2em;padding-bottom:2em;padding-left:2em;font-size:12px;font-style:normal;font-weight:700;text-decoration:underline"><a href="https://shinhanlifevn.com.vn/shinhan-life-viet-nam-tiep-tuc-dong-hanh-cung-benh-nhi-ung-thu-mau-trong-dip-tet-doan-vien/" data-type="page" data-id="1162">Tìm hiểm thêm</a></p>
+        </div>
+        </div>
+        </div>
         </div>   *@
     </div> <!-- ast-container -->
 </div>
