@@ -1,0 +1,52 @@
+﻿@model List<AgencyWeb.Areas.Functions.Controllers.ContactController.OfficeType>;
+@using AgencyWeb.Areas.Functions.Models;
+@{
+    List<ContactDto> contactList = ViewBag.contactList;
+}
+
+<div class="container-fluid p-0">
+    <h1 class="h4 mb-3 form-title"><strong>Liên hệ</strong></h1>
+    <div class="row">
+        <div class="card flex-fill w-100 form-control-ui">
+            <div class="card-body py-3">
+                <div class="row">
+                    <div class="col-6 col-md-6 col-xxl-6 d-flex order-6 order-xxl-6">
+                        <div class="form-group">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3778988728277!2d106.7009362!3d10.7823414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752fcf3efbb139%3A0x8a882b16fbf3bcf2!2zQ8O0bmcgVHkgVE5ISCBC4bqjbyBIaeG7g20gU2hpbmhhbiBMaWZlIFZp4buHdCBOYW0!5e0!3m2!1sen!2sus!4v1695124682370!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-6 col-xxl-6 d-flex order-6 order-xxl-6">
+                        <div class="form-group">
+                            <div class="contactCard">
+                                <p><i class="bi bi-geo-alt-fill"></i> Văn phòng: Tầng 20, Tòa nhà Friendship, 31 Lê Duẩn, Phường Bến Nghé, Quận 1, Tp Hồ Chí Minh</p>
+                                <p><i class="bi bi-telephone-fill"></i> Tổng Đài CSKH: <a>1900998800</a></p>
+                                <p><i class="bi bi-envelope-fill"></i> Email: <a>shinhanlifevn@shinhan.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var p in Model)
+                {
+                    <div class="row contactAddress">
+                        <div class="col-4 col-md-4 col-xxl-4 d-flex order-4 order-xxl-4 h4">
+                            <p><strong>@p.OfficeTypeName</strong></p>
+                        </div>
+                        <div class="col-8 col-md-8 col-xxl-8 order-8 order-xxl-8 h4 lh-lg">
+                            @foreach (var m in contactList)
+                            {
+                                if (m.OfficeTypeId == p.OfficeTypeId)
+                                {
+                                    <div class="col-6 col-md-6 col-xxl-6 order-6 order-xxl-6 h4 lh-lg">
+                                        <p class="pb-2"><strong>@m.Province</strong></p>
+                                        <a id="addressText" href="@m.MapLink">@m.Address</a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

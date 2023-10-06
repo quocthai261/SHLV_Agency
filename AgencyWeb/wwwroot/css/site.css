@@ -2009,3 +2009,38 @@ input {
     border-left: none;
     border-right: none;
 }
+
+.contactCard {
+    background-image: url(https://shinhanlifevn.com.vn/wp-content/uploads/2023/06/Contactus-1.png);
+    background-size: cover;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 3rem;
+    line-height: 4rem;
+}
+    .contactCard p {
+        margin-bottom: 10px;
+        color: white;
+        font-size: 22px;
+        font-family: 'Shinhan';
+        vertical-align: middle;
+        word-break: break-word;
+    }
+    .contactCard p > a{
+        text-decoration: underline !important;
+    }
+
+    .contactCard i{
+        padding-right: 30px;
+    }
+#addressText {
+    text-decoration: underline;
+    color: cornflowerblue;
+}
+
+.contactAddress {
+    display:flex;
+    flex-direction: row-reverse;
+}
