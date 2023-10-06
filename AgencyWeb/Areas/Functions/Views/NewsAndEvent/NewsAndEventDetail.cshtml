@@ -1,0 +1,10 @@
+﻿@model AgencyWeb.Areas.Functions.Models.NewsAndEventDto;
+
+<div class="entry-content clear"
+	 ast-blocks-layout="true" itemprop="text">
+	<p class="newsDetailTitle has-text-align-center"><strong>@Model.Title</strong></p>
+	<p class="newsDetailDate has-text-align-center"><em>@Model.PublishedDate</em></p>
+	<hr class="wp-block-separator newsHorizontalRule" style="margin-bottom:2em" />
+	<p class="align-justify">@Model.Summary</p>
+</div>
+@Html.Raw(Model.Description)
