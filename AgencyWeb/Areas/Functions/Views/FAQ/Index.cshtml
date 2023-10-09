@@ -1,0 +1,28 @@
+﻿@model List<FAQDto>;
+
+@{
+    var count = 0;
+    
+}
+<div class="container-fluid p-0">
+    <div class="row">
+        @foreach(var p in Model)
+        {
+            count += 1;    
+            var collapseString = "collapse" + count.ToString();
+            var hrefString = "#" + collapseString;
+            <a data-bs-toggle="collapse" href=@hrefString role="button" aria-expanded="false" aria-controls="collapseExample">
+            <div class="card card-body form-control-ui">
+                <p class="FAQQuestion">
+                        <strong>@count. @p.Question</strong>
+                </p>
+                <div class="collapse" id=@collapseString>
+                    <p class="FAQAnswer">@p.Answer</p>
+                </div>
+            </div>
+            </a>
+        }
+
+    </div>
+</div>
+

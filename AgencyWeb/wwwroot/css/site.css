@@ -2044,3 +2044,15 @@ input {
     display:flex;
     flex-direction: row-reverse;
 }
+
+.FAQQuestion {
+    font-size: 18px;
+    color: var(--purple-color);
+    border-bottom: 2px solid var(--purple-color);
+    padding: 1em 1.5em 1em 0;
+}
+
+.FAQAnswer {
+    font-size: 16px;
+    line-height:35px;
+}
