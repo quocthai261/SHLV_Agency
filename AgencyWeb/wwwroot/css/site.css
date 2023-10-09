@@ -1927,43 +1927,40 @@ input {
     margin-left: 5px;
 }
 
+/*NEWS AND EVENT*/
+
+.row-content {
+    padding: 1.8rem;
+}
+
 .newsTitle {
     color: #333333;
-    margin-bottom: 0;
-    padding-top: 1em;
-    padding-right: 1.8em;
-    padding-bottom: 1em;
-    padding-left: 1.8em;
     font-size: 18px
 }
+
 .newsPublishedDate {
     color: #333333 !important;
-    font-size:13px;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-right: 30px;
-    padding-bottom: 10px;
-    padding-left: 30px
+    font-size: 13px;
 }
+
 .newsDetail {
     color: #6957c2;
-    padding-right: 2em;
-    padding-bottom: 2em;
-    padding-left: 2em;
     font-size: 13px;
     font-style: normal;
     font-weight: 700;
     text-decoration: underline
 }
+
 .newsSummary {
     color: #333333;
-    padding-right: 2em;
-    padding-left: 2em;
+    margin-bottom: 1.5rem;
     font-size: 15px;
-    min-height: 200px;
-    margin-bottom: 1.6em;
     text-align: justify !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 
 .newsDetailTitle {
@@ -1971,29 +1968,47 @@ input {
     margin-bottom: 0px;
     font-size: 2rem
 }
+
 .newsDetailDate {
     text-align: center;
     margin-bottom: 1.6em;
     font-family: 'Shinhan';
 }
 
+.card-news {
+    box-shadow: 0 0 9px #d2d2d2 !important;
+}
+
+.news-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
 .newsHorizontalRule {
     margin-bottom: 2em
 }
+
 .has-text-align-center {
     text-align: center;
 }
+
 .entry-content {
     word-wrap: break-word;
 }
-.entry-content[ast-blocks-layout] > * {
-    max-width: var(--wp--custom--ast-content-width-size);
-    margin-left: auto;
-    margin-right: auto;
-}
-.entry-content p {
-    margin-bottom: 1.6em;
-}
+
+    .entry-content[ast-blocks-layout] > * {
+        max-width: var(--wp--custom--ast-content-width-size);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .entry-content p {
+        margin-bottom: 1.6em;
+    }
+
 .p {
     display: block;
     margin-block-start: 1em;
@@ -2001,14 +2016,17 @@ input {
     margin-inline-start: 0px;
     margin-inline-end: 0px;
 }
+
 [ast-blocks-layout] .wp-block-separator {
     margin: 20px auto;
 }
+
 .wp-block-separator {
     border: 1px solid;
     border-left: none;
     border-right: none;
 }
+
 
 .contactCard {
     background-image: url(https://shinhanlifevn.com.vn/wp-content/uploads/2023/06/Contactus-1.png);
@@ -2020,6 +2038,7 @@ input {
     padding: 3rem;
     line-height: 4rem;
 }
+
     .contactCard p {
         margin-bottom: 10px;
         color: white;
@@ -2028,19 +2047,21 @@ input {
         vertical-align: middle;
         word-break: break-word;
     }
-    .contactCard p > a{
-        text-decoration: underline !important;
-    }
 
-    .contactCard i{
+        .contactCard p > a {
+            text-decoration: underline !important;
+        }
+
+    .contactCard i {
         padding-right: 30px;
     }
+
 #addressText {
     text-decoration: underline;
     color: cornflowerblue;
 }
 
 .contactAddress {
-    display:flex;
+    display: flex;
     flex-direction: row-reverse;
 }

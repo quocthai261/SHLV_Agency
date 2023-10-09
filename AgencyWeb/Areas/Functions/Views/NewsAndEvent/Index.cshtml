@@ -16,6 +16,7 @@
                     <div class="card-body py-3 card-news">
                         <div class="row">
                             <img decoding="async" width="900" height="600" src="@p.Image" />
+                            <div class="row-content">
                             <p class="newsTitle"><strong><a class="news-title" asp-controller="NewsAndEvent" asp-action="NewsAndEventDetail" asp-route-id="@p.NewsAndEventId">@p.Title</a></strong></p>
                             <p class="newsPublishedDate">@p.PublishedDate</p>
                             <p class="newsSummary">@p.Summary</p>
@@ -23,6 +24,7 @@
                             @*     <p class="newsDetail">Tìm hiểm thêm</p> *@
                                 Tìm hiểm thêm
                             </a>
+                        </div>
                         </div>
                     </div>
                 </div>
