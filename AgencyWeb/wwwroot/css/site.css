@@ -2081,3 +2081,17 @@ input {
 #BonusGrid {
     margin-top: 80px;
 }
+.dx-area-column-cell, .dx-pivotgrid-vertical-headers, .dx-area-description-cell {
+    background-color: var(--purple-color) !important;
+    font-weight: 500;
+}
+.dx-pivotgrid .dx-pivotgrid-area td {
+    color: white;
+}
+.dx-grandtotal{
+    color: black !important;
+    font-weight: 500;
+}
+.dx-pivotgrid .dx-pivotgrid-collapsed .dx-expand::before, .dx-pivotgrid .dx-pivotgrid-expanded .dx-expand::before {
+    color: white;
+}
