@@ -1,0 +1,65 @@
+﻿<div class="container-fluid p-0">
+    <h1 class="h4 mb-3 form-title"><strong>Thưởng tháng - thưởng quý - thưởng năm</strong></h1>
+
+    <div class="row">
+        <div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
+            <div class="card flex-fill w-100 form-control-ui">
+                <div class="card-body py-3">
+                    @(
+                        Html.DevExtreme().PivotGrid()
+
+                                .ID("BonusGrid")
+                                .AllowSortingBySummary(true)
+                                .AllowSorting(true)
+                                .AllowFiltering(true)
+                                .AllowExpandAll(true)
+                                .Height(440)
+                                .ShowBorders(true)
+                                .FieldChooser(c => c.Enabled(false))
+                                .DataSource(d => d
+                                .Store(s => s.WebApi()
+                                .Area("Functions")
+                                .Controller("Bonus")
+                                .LoadAction("GetBonusList"))
+                                .Fields(fields =>
+                                {
+                                    fields.Add()
+                                    .Caption("Tên thưởng")
+                                    .Width(120)
+                                    .DataField("BonusName")
+                                    .Area(PivotGridArea.Row);
+                                    
+
+                                    fields.Add()
+                                    .DataField("BonusDate")
+                                    .DataType(PivotGridDataType.Date)
+                                    .Area(PivotGridArea.Column);
+                                    
+                            fields.Add()
+                            .Caption("Số tiền")
+                            .DataField("Amount")
+                            .DataType(PivotGridDataType.Number)
+                            .SummaryType(SummaryType.Sum)
+                            .Format(format => format
+                            .Type("currency")
+                            .Precision(0) // Number of decimal places
+                            .Currency("VND"))
+                            .Area(PivotGridArea.Data);
+                        })
+                        )
+
+                        )
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function getMonthName(date) {
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return monthNames[date.getMonth()];
+    }
+</script>

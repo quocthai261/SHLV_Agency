@@ -2077,3 +2077,7 @@ input {
     font-size: 16px;
     line-height:35px;
 }
+
+#BonusGrid {
+    margin-top: 80px;
+}
